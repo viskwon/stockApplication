@@ -9,7 +9,7 @@ android {
     buildToolsVersion "30.0.3"
 
     defaultConfig {
-        applicationId "com.example.roomuserinfo"
+        applicationId "com.visk.android.stockmanager"
         minSdkVersion 26
         targetSdkVersion 30
         versionCode 1
@@ -39,12 +39,12 @@ dependencies {
     implementation "androidx.appcompat:appcompat:$rootProject.appCompatVersion"
     implementation "androidx.activity:activity-ktx:$rootProject.activityVersion"
 
-    implementation 'androidx.recyclerview:recyclerview:1.1.0'
+    implementation 'androidx.recyclerview:recyclerview:1.2.1'
     implementation "com.squareup.moshi:moshi:1.9.3"
 
     implementation "com.squareup.moshi:moshi-kotlin:1.9.3"
-    implementation 'androidx.navigation:navigation-fragment-ktx:2.3.2'
-    implementation 'androidx.navigation:navigation-ui-ktx:2.3.2'
+    implementation 'androidx.navigation:navigation-fragment-ktx:2.3.5'
+    implementation 'androidx.navigation:navigation-ui-ktx:2.3.5'
     kapt 'com.squareup.moshi:moshi-kotlin-codegen:1.6.0'
     // Dependencies for working with Architecture components
     // You'll probably have to update the version numbers in build.gradle (Project)

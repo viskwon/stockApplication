@@ -1,16 +1,13 @@
-package com.example.roomuserinfo.repository
+package com.example.stockmanager.repository
 
 import android.util.Log
-import com.example.roomuserinfo.domain.Stock
-import com.example.roomuserinfo.server.stock.StockInfoDTO
-import com.example.roomuserinfo.server.stock.StockRemoteDataSource
+import com.example.stockmanager.domain.Stock
+import com.example.stockmanager.server.stock.StockInfoDTO
+import com.example.stockmanager.server.stock.StockRemoteDataSource
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.async
 import kotlinx.coroutines.channels.Channel
-import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.withContext
-import javax.inject.Inject
 
 class StockRepository   {
     val remoteDataSource = StockRemoteDataSource()

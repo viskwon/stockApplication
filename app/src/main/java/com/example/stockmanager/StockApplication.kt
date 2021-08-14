@@ -1,8 +1,8 @@
-package com.example.roomuserinfo
+package com.example.stockmanager
 
 import android.app.Application
-import com.example.roomuserinfo.db.UserRoomDatabase
-import com.example.roomuserinfo.repository.UserRepository
+import com.example.stockmanager.db.UserRoomDatabase
+import com.example.stockmanager.repository.UserRepository
 
 class StockApplication :Application(){
 

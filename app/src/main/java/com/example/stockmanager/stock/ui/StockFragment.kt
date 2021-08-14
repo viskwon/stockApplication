@@ -1,4 +1,4 @@
-package com.example.roomuserinfo.stock.ui
+package com.example.stockmanager.stock.ui
 
 import android.os.Bundle
 import android.util.Log
@@ -11,9 +11,9 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
-import com.example.roomuserinfo.R
-import com.example.roomuserinfo.domain.Stock
-import com.example.roomuserinfo.viewmodel.StockViewModel
+import com.example.stockmanager.R
+import com.example.stockmanager.domain.Stock
+import com.example.stockmanager.viewmodel.StockViewModel
 import com.google.android.material.appbar.CollapsingToolbarLayout
 
 class StockFragment : Fragment() {

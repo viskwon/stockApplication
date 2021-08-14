@@ -1,4 +1,4 @@
-package com.example.roomuserinfo.db
+package com.example.stockmanager.db
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

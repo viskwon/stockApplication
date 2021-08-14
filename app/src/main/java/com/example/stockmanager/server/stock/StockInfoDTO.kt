@@ -1,4 +1,4 @@
-package com.example.roomuserinfo.server.stock
+package com.example.stockmanager.server.stock
 
 data class StockInfoDTO(val resultCode : String , val result: StockResult)
 

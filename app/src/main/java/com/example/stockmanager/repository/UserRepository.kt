@@ -1,11 +1,9 @@
-package com.example.roomuserinfo.repository
+package com.example.stockmanager.repository
 
 import android.util.Log
-import com.example.roomuserinfo.db.User
-import com.example.roomuserinfo.db.dao.UserDao
+import com.example.stockmanager.db.User
+import com.example.stockmanager.db.dao.UserDao
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.async
-import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.*
 import java.io.IOException
@@ -22,6 +20,7 @@ class UserRepository(private val userDao: UserDao) {
     }
 
 
+/*
     fun refresh() = flow {
         kotlin.runCatching {
             Log.d("hjskwon", "1")
@@ -76,6 +75,7 @@ class UserRepository(private val userDao: UserDao) {
         //combine and return
 
     }.flowOn(Dispatchers.IO)
+*/
 
     fun getInfos(): Flow<List<User>> {
         return userDao.getUserFlow()

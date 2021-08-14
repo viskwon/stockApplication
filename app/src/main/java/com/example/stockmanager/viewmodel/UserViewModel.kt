@@ -1,14 +1,13 @@
-package com.example.roomuserinfo.viewmodel
+package com.example.stockmanager.viewmodel
 
 import android.util.Log
-import android.widget.Toast
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
-import com.example.roomuserinfo.db.User
-import com.example.roomuserinfo.repository.StockRepository
-import com.example.roomuserinfo.repository.UserRepository
+import com.example.stockmanager.db.User
+import com.example.stockmanager.repository.StockRepository
+import com.example.stockmanager.repository.UserRepository
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
@@ -21,14 +20,14 @@ class UserViewModel(private val repository: UserRepository) : ViewModel(){
 
     fun refresh()  {
         viewModelScope.launch {
-            repository.refresh().collect {
+        /*    repository.refresh().collect {
 
 
                 val builder = java.lang.StringBuilder()
                 it.getOrNull()?.forEach { builder.append(it.name +"\n") }
 
                 Log.d("hjskwon", "${it.isFailure}"+it.getOrNull()?.size)
-            }
+            }*/
 
 
         }

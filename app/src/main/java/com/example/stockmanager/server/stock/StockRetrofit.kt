@@ -1,6 +1,5 @@
-package com.example.roomuserinfo.server.stock
+package com.example.stockmanager.server.stock
 
-import kotlinx.coroutines.flow.Flow
 import retrofit2.http.GET
 import retrofit2.http.Query
 

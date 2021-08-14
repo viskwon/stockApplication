@@ -1,12 +1,12 @@
-package com.example.roomuserinfo.viewmodel
+package com.example.stockmanager.viewmodel
 
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.roomuserinfo.domain.Stock
-import com.example.roomuserinfo.repository.StockRepository
+import com.example.stockmanager.domain.Stock
+import com.example.stockmanager.repository.StockRepository
 import kotlinx.coroutines.launch
 
 class StockViewModel () : ViewModel(){

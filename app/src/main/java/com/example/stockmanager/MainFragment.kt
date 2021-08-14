@@ -1,4 +1,4 @@
-package com.example.roomuserinfo
+package com.example.stockmanager
 
 import android.os.Bundle
 import android.view.LayoutInflater

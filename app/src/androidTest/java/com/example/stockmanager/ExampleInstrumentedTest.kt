@@ -1,4 +1,4 @@
-package com.example.roomuserinfo
+package com.example.stockmanager
 
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4

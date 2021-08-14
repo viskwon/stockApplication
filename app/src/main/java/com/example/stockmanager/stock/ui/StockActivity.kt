@@ -1,7 +1,6 @@
-package com.example.roomuserinfo.stock.ui
+package com.example.stockmanager.stock.ui
 
 import android.os.Bundle
-import android.os.PersistableBundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -11,9 +10,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
-import com.example.roomuserinfo.R
-import com.example.roomuserinfo.domain.Stock
-import com.example.roomuserinfo.viewmodel.StockViewModel
+import com.example.stockmanager.R
+import com.example.stockmanager.domain.Stock
+import com.example.stockmanager.viewmodel.StockViewModel
 
 
 class StockActivity : AppCompatActivity() {
