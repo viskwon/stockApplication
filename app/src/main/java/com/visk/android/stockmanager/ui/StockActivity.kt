@@ -1,4 +1,4 @@
-package com.example.stockmanager.stock.ui
+package com.visk.android.stockmanager.ui
 
 import android.os.Bundle
 import android.util.Log
@@ -10,9 +10,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
-import com.example.stockmanager.R
-import com.example.stockmanager.domain.Stock
-import com.example.stockmanager.viewmodel.StockViewModel
+import com.visk.android.stockmanager.R
+import com.visk.android.stockmanager.domain.Stock
+import com.visk.android.stockmanager.viewmodel.StockViewModel
 
 
 class StockActivity : AppCompatActivity() {

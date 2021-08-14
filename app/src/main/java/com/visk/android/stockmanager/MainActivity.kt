@@ -1,9 +1,9 @@
-package com.example.stockmanager
+package com.visk.android.stockmanager
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.viewModels
-import com.example.stockmanager.viewmodel.UserViewModel
+import androidx.appcompat.app.AppCompatActivity
+import com.visk.android.stockmanager.viewmodel.UserViewModel
 
 class MainActivity : AppCompatActivity() {
     private val userViewModel: UserViewModel by viewModels {

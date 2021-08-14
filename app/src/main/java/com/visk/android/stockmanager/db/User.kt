@@ -1,4 +1,4 @@
-package com.example.stockmanager.db
+package com.visk.android.stockmanager.db
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

@@ -1,10 +1,10 @@
-package com.example.stockmanager.db
+package com.visk.android.stockmanager.db
 
 import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.example.stockmanager.db.dao.UserDao
+import com.visk.android.stockmanager.db.dao.UserDao
 
 
 @Database(entities = arrayOf(User::class), version = 1 , exportSchema = true)

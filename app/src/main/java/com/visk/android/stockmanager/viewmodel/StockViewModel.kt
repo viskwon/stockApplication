@@ -1,12 +1,12 @@
-package com.example.stockmanager.viewmodel
+package com.visk.android.stockmanager.viewmodel
 
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.stockmanager.domain.Stock
-import com.example.stockmanager.repository.StockRepository
+import com.visk.android.stockmanager.domain.Stock
+import com.visk.android.stockmanager.repository.StockRepository
 import kotlinx.coroutines.launch
 
 class StockViewModel () : ViewModel(){

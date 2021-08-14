@@ -1,4 +1,4 @@
-package com.example.stockmanager
+package com.visk.android.stockmanager
 
 import android.os.Bundle
 import android.view.LayoutInflater

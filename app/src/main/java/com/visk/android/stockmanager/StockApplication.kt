@@ -1,8 +1,8 @@
-package com.example.stockmanager
+package com.visk.android.stockmanager
 
 import android.app.Application
-import com.example.stockmanager.db.UserRoomDatabase
-import com.example.stockmanager.repository.UserRepository
+import com.visk.android.stockmanager.db.UserRoomDatabase
+import com.visk.android.stockmanager.repository.UserRepository
 
 class StockApplication :Application(){
 

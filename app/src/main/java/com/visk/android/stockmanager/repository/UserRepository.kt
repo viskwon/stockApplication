@@ -1,8 +1,8 @@
-package com.example.stockmanager.repository
+package com.visk.android.stockmanager.repository
 
 import android.util.Log
-import com.example.stockmanager.db.User
-import com.example.stockmanager.db.dao.UserDao
+import com.visk.android.stockmanager.db.User
+import com.visk.android.stockmanager.db.dao.UserDao
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.*

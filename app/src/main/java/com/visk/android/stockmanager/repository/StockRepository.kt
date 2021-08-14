@@ -1,9 +1,9 @@
-package com.example.stockmanager.repository
+package com.visk.android.stockmanager.repository
 
 import android.util.Log
-import com.example.stockmanager.domain.Stock
-import com.example.stockmanager.server.stock.StockInfoDTO
-import com.example.stockmanager.server.stock.StockRemoteDataSource
+import com.visk.android.stockmanager.domain.Stock
+import com.visk.android.stockmanager.stock.StockInfoDTO
+import com.visk.android.stockmanager.stock.StockRemoteDataSource
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.*

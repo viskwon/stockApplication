@@ -1,4 +1,4 @@
-package com.example.stockmanager.server.stock
+package com.visk.android.stockmanager.stock
 
 import retrofit2.http.GET
 import retrofit2.http.Query

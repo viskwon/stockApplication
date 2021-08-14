@@ -1,4 +1,4 @@
-package com.example.stockmanager.server.stock
+package com.visk.android.stockmanager.stock
 
 data class StockInfoDTO(val resultCode : String , val result: StockResult)
 

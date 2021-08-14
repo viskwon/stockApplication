@@ -1,10 +1,10 @@
-package com.example.stockmanager.db.dao
+package com.visk.android.stockmanager.db.dao
 
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.example.stockmanager.db.User
+import com.visk.android.stockmanager.db.User
 import kotlinx.coroutines.flow.Flow
 
 
