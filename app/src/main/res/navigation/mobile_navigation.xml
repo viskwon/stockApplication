@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    app:startDestination="@id/main_Fragment">
+    <fragment
+        android:id="@+id/main_Fragment"
+        android:name="com.example.roomuserinfo.MainFragment"
+        android:label="Blank"
+        tools:layout="@layout/main_fragment">
+
+        <action
+            android:id="@+id/main_to_stock"
+            app:destination="@id/stock_fragment"/>
+    </fragment>
+    <fragment
+        android:id="@+id/stock_fragment"
+        android:name="com.example.roomuserinfo.stock.ui.StockFragment"
+        android:label="stork">
+
+    </fragment>
+
+</navigation>
