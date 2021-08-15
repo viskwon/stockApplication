@@ -24,6 +24,4 @@ class StockRemoteDataSource {
     suspend fun getStockInfo(stockId: String) =
         retrofit.getStockInfo("SERVICE_ITEM:" + stockId)
 
-    suspend fun getStockFlow(stockId: String) =
-        flow { emit(retrofit.getStockInfo("SERVICE_ITEM:" + stockId)) }
 }

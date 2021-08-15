@@ -28,9 +28,6 @@ class StockAdapter(val listenerViewHolder: ViewHolderOnItemClickListener) :
         mDiffer.submitList(list)
     }
 
-
-
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): stockViewHolder {
         val viewGroup = LayoutInflater.from(parent.context)
             .inflate(R.layout.stock_list_item, parent, false)

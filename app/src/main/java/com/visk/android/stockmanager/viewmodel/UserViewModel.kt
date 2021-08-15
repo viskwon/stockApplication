@@ -33,22 +33,7 @@ class UserViewModel(private val repository: UserRepository) : ViewModel(){
         }
     }
 
-    fun getStockInfo(stockId : String){
-        viewModelScope.launch {
-       //     val stock = StockRepository().getStockInfo(stockId)
-        //    Log.d("hjskwon" ,"stock ${stock.currentPrice}")
-        }
-    }
 
-
-    fun getStockInfoFlow(stockId : String){
-        viewModelScope.launch {
-            val stock = StockRepository().getStockInfoFlow(stockId).collect {
-                Log.d("hjskwon" ,"stock ${it.currentPrice}")
-
-            }
-        }
-    }
 
 
     class UserViewModelFactory(private val repository: UserRepository) : ViewModelProvider.Factory {

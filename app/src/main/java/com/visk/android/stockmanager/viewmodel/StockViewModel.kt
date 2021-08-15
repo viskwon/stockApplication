@@ -1,29 +1,19 @@
 package com.visk.android.stockmanager.viewmodel
 
-import android.util.Log
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
-import com.visk.android.stockmanager.domain.Stock
 import com.visk.android.stockmanager.repository.StockRepository
 import kotlinx.coroutines.launch
 
-class StockViewModel : ViewModel(){
+class StockViewModel : ViewModel() {
 
-    val stockList = listOf<String>("005930", "027740", "068270", "032350")
-    private val _stockListLiveData = MutableLiveData<List<Stock>>()
-    val stockLiveData: LiveData<List<Stock>>
-        get() = _stockListLiveData
-
+    val stockRepository = StockRepository()
+    val stockList = listOf("005930", "027740", "068270", "032350")
+    val stockLiveData = stockRepository.getStockListFlow().asLiveData()
     fun getStockInfo() {
         viewModelScope.launch {
-            Log.d("hjswon","getStockInfo")
-
-            val stockList = StockRepository().requestStockInfo(stockList)
-            Log.d("hjswon","getStockInfo come" +stockList.size)
-
-            _stockListLiveData.value = stockList
+            stockRepository.requestStockInfo(stockList)
         }
     }
 }
