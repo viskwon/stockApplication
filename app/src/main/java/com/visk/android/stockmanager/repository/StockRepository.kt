@@ -18,7 +18,18 @@ import java.util.*
 
 @FlowPreview
 class StockRepository   {
-    val remoteDataSource = StockRemoteDataSource()
+
+    companion object{
+        private var INSTANCE : StockRepository? = null
+        fun getInstance() : StockRepository{
+            INSTANCE = INSTANCE?:  StockRepository()
+            return INSTANCE as StockRepository
+        }
+    }
+
+
+
+    private val remoteDataSource = StockRemoteDataSource()
 
     private val stockChannel = ConflatedBroadcastChannel<List<Stock>>()
 

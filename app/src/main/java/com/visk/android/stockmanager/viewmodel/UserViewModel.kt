@@ -1,14 +1,11 @@
 package com.visk.android.stockmanager.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.visk.android.stockmanager.db.User
-import com.visk.android.stockmanager.repository.StockRepository
 import com.visk.android.stockmanager.repository.UserRepository
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 class UserViewModel(private val repository: UserRepository) : ViewModel(){

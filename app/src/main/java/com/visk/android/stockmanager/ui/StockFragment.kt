@@ -49,6 +49,7 @@ class StockFragment : Fragment() {
         viewModel.stockLiveData.observe(viewLifecycleOwner, {
             adapter.setData(it)
         })
+        viewModel.autoRefresh()
         return view
     }
 
