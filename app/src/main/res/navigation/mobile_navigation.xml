@@ -5,7 +5,7 @@
     app:startDestination="@id/main_Fragment">
     <fragment
         android:id="@+id/main_Fragment"
-        android:name="com.example.stockmanager.MainFragment"
+        android:name="com.visk.android.stockmanager.MainFragment"
         android:label="Blank"
         tools:layout="@layout/main_fragment">
 
@@ -15,7 +15,7 @@
     </fragment>
     <fragment
         android:id="@+id/stock_fragment"
-        android:name="com.example.stockmanager.stock.ui.StockFragment"
+        android:name="com.visk.android.stockmanager.ui.StockFragment"
         android:label="stork">
 
     </fragment>

@@ -9,7 +9,7 @@ import com.visk.android.stockmanager.domain.Stock
 import com.visk.android.stockmanager.repository.StockRepository
 import kotlinx.coroutines.launch
 
-class StockViewModel () : ViewModel(){
+class StockViewModel : ViewModel(){
 
     val stockList = listOf<String>("005930", "027740", "068270", "032350")
     private val _stockListLiveData = MutableLiveData<List<Stock>>()

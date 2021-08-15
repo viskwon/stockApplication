@@ -1,5 +1,6 @@
 package com.visk.android.stockmanager.repository
 
+import android.text.format.DateFormat
 import android.util.Log
 import com.visk.android.stockmanager.domain.Stock
 import com.visk.android.stockmanager.stock.StockInfoDTO
@@ -8,26 +9,22 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.withContext
+import java.text.SimpleDateFormat
+import java.util.*
 
 class StockRepository   {
     val remoteDataSource = StockRemoteDataSource()
-    val channel = Channel<List<Stock>>()
 
     suspend fun requestStockInfo(stockIds: List<String>): List<Stock> {
         return withContext(Dispatchers.IO)
         {
-            Log.d("hjswon", "start")
             val resultList = stockIds.asFlow().flatMapMerge {
                 flow {
-                    Log.d("hjswon", it)
                     val result = remoteDataSource.getStockInfo(it).map()
-                    Log.d("hjswon", "end result")
-
                     emit(result)
                 }
-            }.toList()
+            }.toList().sortedBy { it.name }
             Log.d("hjswon", "end" + resultList.size)
-            channel.offer(resultList)
 
             return@withContext resultList
         }
@@ -44,7 +41,9 @@ class StockRepository   {
         result.areas.get(0).datas.get(0).nv,
         result.areas.get(0).datas.get(0).sv,
         result.areas.get(0).datas.get(0).aq,
-        result.areas.get(0).datas.get(0).cr
+        result.areas.get(0).datas.get(0).cr,
+        SimpleDateFormat("hh:mm").format(Calendar.getInstance().time)
+
     )
 
 }

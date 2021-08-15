@@ -17,7 +17,6 @@ class MainFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.main_fragment, container, false)
-Toast.makeText(context , "dd" ,Toast.LENGTH_SHORT).show()
         view.findViewById<Button>(R.id.btn_start).setOnClickListener {
             findNavController().navigate(R.id.main_to_stock)
         }
