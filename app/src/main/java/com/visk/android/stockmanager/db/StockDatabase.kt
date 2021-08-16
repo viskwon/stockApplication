@@ -7,25 +7,26 @@ import androidx.room.RoomDatabase
 import com.visk.android.stockmanager.db.dao.UserDao
 
 
-@Database(entities = arrayOf(User::class), version = 1 , exportSchema = true)
-public abstract class UserRoomDatabase  : RoomDatabase(){
+@Database(entities = arrayOf(StockNote::class), version = 1 , exportSchema = true)
+public abstract class StockDatabase  : RoomDatabase(){
 
     abstract fun userDao() : UserDao
+    abstract fun stockDao() : StockNote
 
     companion object {
         // Singleton prevents multiple instances of database opening at the
         // same time.
         @Volatile
-        private var INSTANCE: UserRoomDatabase? = null
+        private var INSTANCE: StockDatabase? = null
 
-        fun getDatabase(context: Context): UserRoomDatabase {
+        fun getDatabase(context: Context): StockDatabase {
             // if the INSTANCE is not null, then return it,
             // if it is, then create the database
             return INSTANCE ?: synchronized(this) {
                 val instance = Room.databaseBuilder(
                     context.applicationContext,
-                    UserRoomDatabase::class.java,
-                    "user_database"
+                    StockDatabase::class.java,
+                    "stock_database"
                 ).enableMultiInstanceInvalidation().build()
                 INSTANCE = instance
                 // return instance
