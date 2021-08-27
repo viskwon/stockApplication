@@ -6,4 +6,4 @@ data class StockResult(val pollingInterval :Int , val areas: List<StockArea>)
 
 data class StockArea(val datas: List<StockDatas>)
 
-data class StockDatas(val nm:String,val nv :Int ,val sv :Int , val aq :Int , val cr : Float)
+data class StockDatas(val cd :String ,val nm:String,val nv :Int ,val sv :Int , val aq :Int , val cr : Float)

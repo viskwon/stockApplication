@@ -4,14 +4,15 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import com.visk.android.stockmanager.db.dao.StockDao
 import com.visk.android.stockmanager.db.dao.UserDao
 
 
-@Database(entities = arrayOf(StockNote::class), version = 1 , exportSchema = true)
+@Database(entities = arrayOf(StockInfo::class,StockNote::class,User::class), version = 1 , exportSchema = true)
 public abstract class StockDatabase  : RoomDatabase(){
 
     abstract fun userDao() : UserDao
-    abstract fun stockDao() : StockNote
+    abstract fun stockDao() : StockDao
 
     companion object {
         // Singleton prevents multiple instances of database opening at the
@@ -34,7 +35,4 @@ public abstract class StockDatabase  : RoomDatabase(){
             }
         }
     }
-
-
-
 }

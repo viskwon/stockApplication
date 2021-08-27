@@ -8,15 +8,21 @@ import androidx.lifecycle.viewModelScope
 import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
 import androidx.work.Worker
+import com.visk.android.stockmanager.StockApplication
 import com.visk.android.stockmanager.repository.StockRepository
 import com.visk.android.stockmanager.worker.StockRefreshWorker
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import java.util.concurrent.TimeUnit
 
-class StockViewModel(application: Application) : AndroidViewModel(application) {
+class StockViewModel(application: Application ) : AndroidViewModel(application) {
 
-    private val stockRepository = StockRepository.getInstance()
+    private val stockRepository: StockRepository
+        get() {
+           return getApplication<StockApplication>().stockRepository
+        }
+
+
     private val stockList = listOf("005930", "027740", "068270", "032350")
     val stockLiveData = stockRepository.getStockListFlow().asLiveData()
     fun getStockInfo() {
