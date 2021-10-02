@@ -22,10 +22,12 @@ class ExampleUnitTest {
                 .build()
       val adapter =  moshi.adapter(User::class.java)
 
+/*
        val user  = User("d",1)
       println(adapter.toJson(user))
        val test =  adapter.fromJson("{\"name\":null,\"age\":1,\"id\":0}")
         println(adapter.toJson(test))
+*/
     }
 }
 object NULL_TO_EMPTY_STRING_ADAPTER {
