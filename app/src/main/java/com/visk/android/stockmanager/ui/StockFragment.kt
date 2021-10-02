@@ -14,11 +14,9 @@ import com.visk.android.stockmanager.R
 class StockFragment : Fragment() {
     lateinit var viewModel: StockViewModel
 
-
     private fun initActionBar(view: View) {
         val activity = (activity as AppCompatActivity)
         val toolbar = view.findViewById<Toolbar>(R.id.toolbar)
-        val collasingtoolbar = view.findViewById<CollapsingToolbarLayout>(R.id.collasingtoolbar)
         activity.setSupportActionBar(toolbar)
 
         activity.supportActionBar?.apply {
