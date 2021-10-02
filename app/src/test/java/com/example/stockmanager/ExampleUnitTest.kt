@@ -1,6 +1,6 @@
 package com.example.stockmanager
 
-import com.visk.android.stockmanager.db.User
+import com.visk.android.stockmanager.db.entity.User
 import com.squareup.moshi.FromJson
 import com.squareup.moshi.JsonReader
 import com.squareup.moshi.Moshi

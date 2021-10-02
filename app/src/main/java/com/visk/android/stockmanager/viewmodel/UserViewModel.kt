@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
-import com.visk.android.stockmanager.db.User
+import com.visk.android.stockmanager.db.entity.User
 import com.visk.android.stockmanager.repository.UserRepository
 import kotlinx.coroutines.launch
 

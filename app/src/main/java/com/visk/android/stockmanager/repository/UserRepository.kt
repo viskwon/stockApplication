@@ -1,7 +1,7 @@
 package com.visk.android.stockmanager.repository
 
 import android.util.Log
-import com.visk.android.stockmanager.db.User
+import com.visk.android.stockmanager.db.entity.User
 import com.visk.android.stockmanager.db.dao.UserDao
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay

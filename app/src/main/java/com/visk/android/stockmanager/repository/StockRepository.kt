@@ -1,8 +1,7 @@
 package com.visk.android.stockmanager.repository
 
-import com.visk.android.stockmanager.db.StockInfo
+import com.visk.android.stockmanager.db.entity.StockInfo
 import com.visk.android.stockmanager.db.dao.StockDao
-import com.visk.android.stockmanager.domain.Stock
 import com.visk.android.stockmanager.stock.StockInfoDTO
 import com.visk.android.stockmanager.stock.StockRemoteDataSource
 import kotlinx.coroutines.Dispatchers

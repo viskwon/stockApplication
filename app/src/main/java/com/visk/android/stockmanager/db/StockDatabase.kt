@@ -6,9 +6,12 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.visk.android.stockmanager.db.dao.StockDao
 import com.visk.android.stockmanager.db.dao.UserDao
+import com.visk.android.stockmanager.db.entity.StockInfo
+import com.visk.android.stockmanager.db.entity.StockNote
+import com.visk.android.stockmanager.db.entity.User
 
 
-@Database(entities = arrayOf(StockInfo::class,StockNote::class,User::class), version = 1 , exportSchema = true)
+@Database(entities = arrayOf(StockInfo::class, StockNote::class, User::class), version = 1 , exportSchema = true)
 public abstract class StockDatabase  : RoomDatabase(){
 
     abstract fun userDao() : UserDao

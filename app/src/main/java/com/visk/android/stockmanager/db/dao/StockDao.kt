@@ -4,9 +4,8 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.visk.android.stockmanager.db.StockInfo
-import com.visk.android.stockmanager.db.StockNote
-import com.visk.android.stockmanager.db.User
+import com.visk.android.stockmanager.db.entity.StockInfo
+import com.visk.android.stockmanager.db.entity.StockNote
 import kotlinx.coroutines.flow.Flow
 
 @Dao
