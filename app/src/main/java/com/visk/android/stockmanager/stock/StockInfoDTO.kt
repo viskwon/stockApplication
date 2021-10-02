@@ -1,9 +1,18 @@
 package com.visk.android.stockmanager.stock
 
-data class StockInfoDTO(val resultCode : String , val result: StockResult)
+import com.google.gson.annotations.SerializedName
 
-data class StockResult(val pollingInterval :Int , val areas: List<StockArea>)
+data class StockInfoDTO(val resultCode: String, val result: StockResult)
+
+data class StockResult(val pollingInterval: Int, val areas: List<StockArea>)
 
 data class StockArea(val datas: List<StockDatas>)
 
-data class StockDatas(val cd :String ,val nm:String,val nv :Int ,val sv :Int , val aq :Int , val cr : Float)
+data class StockDatas(
+    @SerializedName("cd") val stockId: String,
+    @SerializedName("nm") val name: String,
+    @SerializedName("nv") val currentPrice: Int,
+    @SerializedName("sv") val yesterdayPrice: Int,
+    @SerializedName("aq") val tradeVolume: Int,
+    @SerializedName("cr") val diffPercent: Float
+)

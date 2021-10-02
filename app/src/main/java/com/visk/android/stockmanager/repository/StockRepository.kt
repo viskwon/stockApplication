@@ -8,7 +8,6 @@ import com.visk.android.stockmanager.stock.StockRemoteDataSource
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
-import kotlinx.coroutines.channels.ConflatedBroadcastChannel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.withContext
 import java.text.SimpleDateFormat
@@ -16,14 +15,12 @@ import java.util.*
 
 @FlowPreview
 class StockRepository(val remoteDataSource : StockRemoteDataSource , val stockDao: StockDao ) {
-
-    private val stockChannel = ConflatedBroadcastChannel<List<Stock>>()
+    fun getStockListFlow() = stockDao.getStockInfoFlow().distinctUntilChanged()
 
     @OptIn(ExperimentalCoroutinesApi::class)
     suspend fun requestStockInfo(stockIds: List<String>) {
        withContext(Dispatchers.IO)
         {
-
             val resultList = stockIds.asFlow().flatMapMerge {
                 flow {
                     val response = remoteDataSource.getStockInfo(it)
@@ -31,31 +28,17 @@ class StockRepository(val remoteDataSource : StockRemoteDataSource , val stockDa
                 }
             }.toList()
             stockDao.insert(resultList.map{it.mapStock()})
-            stockChannel.send(resultList.map { it.map() }.sortedBy { it.name })
         }
     }
 
-    fun getStockListFlow() = stockChannel.asFlow()
-
-    private fun StockInfoDTO.map() = Stock(
-        result.areas.get(0).datas.get(0).nm,
-        result.areas.get(0).datas.get(0).nv,
-        result.areas.get(0).datas.get(0).sv,
-        result.areas.get(0).datas.get(0).aq,
-        result.areas.get(0).datas.get(0).cr,
-        SimpleDateFormat("hh:mm").format(Calendar.getInstance().time)
-    )
-
     private fun StockInfoDTO.mapStock() = StockInfo(
-        result.areas.get(0).datas.get(0).cd,
+        result.areas.get(0).datas.get(0).stockId,
         SimpleDateFormat("yyyyMMdd").format(Calendar.getInstance().time),
-        result.areas.get(0).datas.get(0).nm,
-        result.areas.get(0).datas.get(0).nv,
-        result.areas.get(0).datas.get(0).sv,
-        result.areas.get(0).datas.get(0).aq,
-        result.areas.get(0).datas.get(0).cr,
+        result.areas.get(0).datas.get(0).name,
+        result.areas.get(0).datas.get(0).currentPrice,
+        result.areas.get(0).datas.get(0).yesterdayPrice,
+        result.areas.get(0).datas.get(0).tradeVolume,
+        result.areas.get(0).datas.get(0).diffPercent,
         SimpleDateFormat("hh:mm").format(Calendar.getInstance().time)
     )
-
-
 }
