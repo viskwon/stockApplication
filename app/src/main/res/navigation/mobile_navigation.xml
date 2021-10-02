@@ -2,11 +2,11 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    app:startDestination="@id/stock_fragment">
+    app:startDestination="@id/main_fragment">
     <fragment
-        android:id="@+id/stock_fragment"
-        android:name="com.visk.android.stockmanager.ui.StockFragment"
-        android:label="stork">
+        android:id="@+id/main_fragment"
+        android:name="com.visk.android.stockmanager.ui.MainFragment"
+        android:label="main">
 
     </fragment>
 </navigation>
