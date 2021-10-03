@@ -33,14 +33,10 @@ class StockFragment : Fragment() {
         val editText = EditText(context).apply {  }
         AlertDialog.Builder(requireActivity()).setTitle("주식 ID 를 입력하세요").setView(editText).setPositiveButton("ok",
             { dialogInterface, i ->
-
+                viewModel.addStock(editText.text.toString())
             }).setNegativeButton("cancel",null).create().show()
         return super.onOptionsItemSelected(item)
     }
-
-
-
-
 
     override fun onCreateView(
         inflater: LayoutInflater,
