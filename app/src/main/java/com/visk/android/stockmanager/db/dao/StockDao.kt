@@ -19,10 +19,15 @@ interface StockDao {
     @Query("SELECT * FROM StockInfo ")
     fun getStockInfoFlow(): Flow<List<StockInfo>>
 
+    @Query("SELECT stockId FROM StockInfo  ")
+    suspend fun getStockIds() : List<String>
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insert(stockInfo: List<StockInfo>)
+    suspend fun insertStock(stockInfo: List<StockInfo>)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertStock(stockInfo: StockInfo)
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    suspend fun insert(word: StockNote)
+    suspend fun insertNote(word: StockNote)
 
 }

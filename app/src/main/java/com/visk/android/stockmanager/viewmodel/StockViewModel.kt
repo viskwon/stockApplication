@@ -47,4 +47,10 @@ class StockViewModel(application: Application ) : AndroidViewModel(application) 
         diffPercent,
         updateTime
     )
+
+    fun addStock (stockId : String){
+        viewModelScope.launch {
+            stockRepository.addStock(stockId)
+        }
+    }
 }

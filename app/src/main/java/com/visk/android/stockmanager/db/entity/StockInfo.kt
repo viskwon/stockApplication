@@ -3,10 +3,10 @@ package com.visk.android.stockmanager.db.entity
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-@Entity(primaryKeys = arrayOf("stockId","date"))
+@Entity
 class StockInfo(
+    @PrimaryKey
     val stockId: String,
-    val date: String,
     val name: String,
     val currentPrice: Int,
     val yesterdayPrice: Int,

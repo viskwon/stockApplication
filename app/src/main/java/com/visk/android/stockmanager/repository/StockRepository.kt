@@ -12,27 +12,30 @@ import kotlinx.coroutines.withContext
 import java.text.SimpleDateFormat
 import java.util.*
 
-@FlowPreview
 class StockRepository(val remoteDataSource : StockRemoteDataSource , val stockDao: StockDao ) {
     fun getStockListFlow() = stockDao.getStockInfoFlow().distinctUntilChanged()
 
     @OptIn(ExperimentalCoroutinesApi::class)
     suspend fun requestStockInfo(stockIds: List<String>) {
        withContext(Dispatchers.IO)
-        {
-            val resultList = stockIds.asFlow().flatMapMerge {
-                flow {
-                    val response = remoteDataSource.getStockInfo(it)
-                    emit(response)
-                }
-            }.toList()
-            stockDao.insert(resultList.map{it.mapStock()})
-        }
+       {
+           val resultList = stockDao.getStockIds().asFlow().flatMapMerge {
+               flow {
+                   val response = remoteDataSource.getStockInfo(it)
+                   emit(response)
+               }
+           }.toList()
+           stockDao.insertStock(resultList.map { it.mapStock() })
+       }
+    }
+
+    suspend fun addStock(stockId: String) {
+        val response = remoteDataSource.getStockInfo(stockId)
+        stockDao.insertStock(response.mapStock())
     }
 
     private fun StockInfoDTO.mapStock() = StockInfo(
         result.areas.get(0).datas.get(0).stockId,
-        SimpleDateFormat("yyyyMMdd").format(Calendar.getInstance().time),
         result.areas.get(0).datas.get(0).name,
         result.areas.get(0).datas.get(0).currentPrice,
         result.areas.get(0).datas.get(0).yesterdayPrice,
