@@ -6,5 +6,7 @@ data class Stock(
     val yesterdayPrice: Int,
     val tradeVolume: Int,
     val diffPercent: Number,
+    val todayHigh: Int,
+    val todayLow: Int,
     val updateTime: String
 )

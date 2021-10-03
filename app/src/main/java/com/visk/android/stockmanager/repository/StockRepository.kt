@@ -41,6 +41,8 @@ class StockRepository(val remoteDataSource : StockRemoteDataSource , val stockDa
         result.areas.get(0).datas.get(0).yesterdayPrice,
         result.areas.get(0).datas.get(0).tradeVolume,
         result.areas.get(0).datas.get(0).diffPercent,
+        result.areas.get(0).datas.get(0).todayHigh,
+        result.areas.get(0).datas.get(0).todayLow,
         SimpleDateFormat("hh:mm").format(Calendar.getInstance().time)
     )
 }

@@ -12,5 +12,7 @@ class StockInfo(
     val yesterdayPrice: Int,
     val tradeVolume: Int,
     val diffPercent: Float,
+    val todayHigh: Int,
+    val todayLow: Int,
     val updateTime: String
 )

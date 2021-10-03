@@ -14,5 +14,7 @@ data class StockDatas(
     @SerializedName("nv") val currentPrice: Int,
     @SerializedName("sv") val yesterdayPrice: Int,
     @SerializedName("aq") val tradeVolume: Int,
-    @SerializedName("cr") val diffPercent: Float
+    @SerializedName("cr") val diffPercent: Float,
+    @SerializedName("hv") val todayHigh: Int,
+    @SerializedName("lv") val todayLow: Int
 )

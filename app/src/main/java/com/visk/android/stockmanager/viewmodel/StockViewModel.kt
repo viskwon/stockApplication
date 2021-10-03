@@ -45,6 +45,8 @@ class StockViewModel(application: Application ) : AndroidViewModel(application) 
         yesterdayPrice,
         tradeVolume,
         diffPercent,
+        todayHigh,
+        todayLow,
         updateTime
     )
 
