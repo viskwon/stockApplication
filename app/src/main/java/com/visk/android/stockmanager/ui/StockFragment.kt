@@ -1,8 +1,12 @@
 package com.visk.android.stockmanager.ui
 
+import android.content.DialogInterface
 import android.os.Bundle
 import android.view.*
+import android.widget.EditText
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.AlertDialogLayout
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -18,11 +22,25 @@ class StockFragment : Fragment() {
         val activity = (activity as AppCompatActivity)
         val toolbar = view.findViewById<Toolbar>(R.id.toolbar)
         activity.setSupportActionBar(toolbar)
-
-        activity.supportActionBar?.apply {
-            setDisplayHomeAsUpEnabled(true)
-        }
+        setHasOptionsMenu(true)
     }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.stock_menu, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        val editText = EditText(context).apply {  }
+        AlertDialog.Builder(requireActivity()).setTitle("주식 ID 를 입력하세요").setView(editText).setPositiveButton("ok",
+            { dialogInterface, i ->
+
+            }).setNegativeButton("cancel",null).create().show()
+        return super.onOptionsItemSelected(item)
+    }
+
+
+
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
