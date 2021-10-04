@@ -7,6 +7,16 @@
         android:id="@+id/main_fragment"
         android:name="com.visk.android.stockmanager.ui.MainFragment"
         android:label="main">
+        <action
+            android:id="@+id/main_to_addtrade"
+            app:destination="@id/add_trade_fragment" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/add_trade_fragment"
+        android:name="com.visk.android.stockmanager.ui.AddTradeFragment"
+        android:label="trade">
 
     </fragment>
 </navigation>

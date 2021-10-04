@@ -4,7 +4,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity
-class StockTrade(var stockId: String, var volumn: Int, var price: Int, var date: Long) {
+class StockTrade(var stockId: String, var volumn: Int, var price: Int, var date: String) {
     @PrimaryKey(autoGenerate = true)
     var tradeId: Int = 0
 }

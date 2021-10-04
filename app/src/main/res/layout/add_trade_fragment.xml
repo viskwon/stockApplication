@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="24dp">
+        <TextView
+            android:id="@+id/add_trade_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="종목코드 "
+            android:textSize="15dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            />
+        <EditText
+            android:id="@+id/stockid_edit"
+            android:textSize="15dp"
+            android:layout_marginStart="20dp"
+            android:inputType="numberDecimal"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textAlignment="textEnd"
+            app:layout_constraintStart_toEndOf="@id/add_trade_name"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+
+        <TextView
+            android:id="@+id/add_trade_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="가격 "
+            android:textSize="15dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/add_trade_name"
+            />
+        <EditText
+            android:id="@+id/price_edit"
+            android:textSize="15dp"
+            android:layout_marginStart="20dp"
+            android:layout_width="0dp"
+            android:inputType="numberDecimal"
+            android:layout_height="wrap_content"
+            android:textAlignment="textEnd"
+            app:layout_constraintStart_toEndOf="@id/add_trade_name"
+            app:layout_constraintTop_toTopOf="@id/add_trade_price"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <TextView
+            android:id="@+id/add_trade_vol"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="수량 "
+            android:textSize="15dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/add_trade_price"
+            />
+        <EditText
+            android:id="@+id/vol_edit"
+            android:textSize="15dp"
+            android:layout_marginStart="20dp"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textAlignment="textEnd"
+            android:inputType="numberDecimal"
+            app:layout_constraintStart_toEndOf="@id/add_trade_vol"
+            app:layout_constraintTop_toTopOf="@id/add_trade_vol"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <CalendarView
+            android:id="@+id/add_trade_calendar"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/add_trade_vol"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <Button
+            android:id="@+id/save_trade"
+            android:layout_width="96dp"
+            android:layout_height="wrap_content"
+            android:textSize="17dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/add_trade_calendar"
+            android:text="저장"/>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

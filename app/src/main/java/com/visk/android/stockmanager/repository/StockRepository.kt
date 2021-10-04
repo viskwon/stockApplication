@@ -2,6 +2,8 @@ package com.visk.android.stockmanager.repository
 
 import com.visk.android.stockmanager.db.entity.StockInfo
 import com.visk.android.stockmanager.db.dao.StockDao
+import com.visk.android.stockmanager.db.entity.StockMine
+import com.visk.android.stockmanager.db.entity.StockTrade
 import com.visk.android.stockmanager.stock.StockInfoDTO
 import com.visk.android.stockmanager.stock.StockRemoteDataSource
 import kotlinx.coroutines.Dispatchers
@@ -14,9 +16,13 @@ import java.util.*
 
 class StockRepository(val remoteDataSource : StockRemoteDataSource , val stockDao: StockDao ) {
     fun getStockListFlow() = stockDao.getStockInfoFlow().distinctUntilChanged()
+    suspend fun myStockListFlow() : Flow<List<StockInfo>>{
+        return stockDao.getStockInfoFlow(stockDao.getMyStockIds()).distinctUntilChanged()
+    }
+    fun getMyStockFlow() = stockDao.getMyStockFlow().distinctUntilChanged()
 
     @OptIn(ExperimentalCoroutinesApi::class)
-    suspend fun requestStockInfo(stockIds: List<String>) {
+    suspend fun requestStockInfo() {
        withContext(Dispatchers.IO)
        {
            val resultList = stockDao.getStockIds().asFlow().flatMapMerge {
@@ -29,9 +35,34 @@ class StockRepository(val remoteDataSource : StockRemoteDataSource , val stockDa
        }
     }
 
+    @OptIn(ExperimentalCoroutinesApi::class)
+    suspend fun requestStockInfo(ids:List<String>) {
+        withContext(Dispatchers.IO)
+        {
+            val resultList = stockDao.getStockIds().asFlow().flatMapMerge {
+                flow {
+                    val response = remoteDataSource.getStockInfo(it)
+                    emit(response)
+                }
+            }.toList()
+            stockDao.insertStock(resultList.map { it.mapStock() })
+        }
+    }
+
     suspend fun addStock(stockId: String) {
         val response = remoteDataSource.getStockInfo(stockId)
         stockDao.insertStock(response.mapStock())
+    }
+
+    suspend fun addTrade(stockId: String, price: Int, volume: Int, date: String) {
+        stockDao.insertTrade(StockTrade(stockId, price, volume, date))
+        val stockMine = stockDao.getStockMine(stockId)?.apply {
+            val total = this.price * this.volumn +  price * volume
+            this.volumn = volumn + this.volumn
+            this.price = total / this.volumn
+        }?: StockMine(stockId,volume,price,date)
+
+        stockDao.insertMyStock(stockMine)
     }
 
     private fun StockInfoDTO.mapStock() = StockInfo(

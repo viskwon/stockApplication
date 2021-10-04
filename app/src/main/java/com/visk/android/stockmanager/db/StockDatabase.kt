@@ -8,12 +8,10 @@ import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.visk.android.stockmanager.db.dao.StockDao
 import com.visk.android.stockmanager.db.dao.UserDao
-import com.visk.android.stockmanager.db.entity.StockInfo
-import com.visk.android.stockmanager.db.entity.StockNote
-import com.visk.android.stockmanager.db.entity.User
+import com.visk.android.stockmanager.db.entity.*
 
 
-@Database(entities = arrayOf(StockInfo::class, StockNote::class, User::class), version = 2 , exportSchema = true)
+@Database(entities = arrayOf(StockInfo::class, StockNote::class, User::class , StockTrade::class,StockMine::class), version = 4 , exportSchema = true)
 public abstract class StockDatabase  : RoomDatabase(){
 
     abstract fun userDao() : UserDao
@@ -33,7 +31,7 @@ public abstract class StockDatabase  : RoomDatabase(){
                     context.applicationContext,
                     StockDatabase::class.java,
                     "stock_database"
-                ).addMigrations(MIGRATION_1_2).enableMultiInstanceInvalidation().build()
+                ).addMigrations(MIGRATION_1_2, MIGRATION_2_3, MIGRATION_3_4).enableMultiInstanceInvalidation().build()
                 INSTANCE = instance
                 // return instance
                 instance
@@ -50,6 +48,21 @@ public abstract class StockDatabase  : RoomDatabase(){
                 """.trimIndent())
                 database.execSQL("DROP TABLE StockInfo")
                 database.execSQL("ALTER TABLE StockInfo_temp RENAME TO StockInfo")
+            }
+        }
+
+        val MIGRATION_2_3 = object : Migration(2, 3) { // https://developer.android.com/training/data-storage/room/migrating-db-versions?hl=ko
+            override fun migrate(database: SupportSQLiteDatabase) {
+                database.execSQL("""
+                CREATE TABLE `StockTrade` (`stockId` TEXT NOT NULL, `volumn` INTEGER NOT NULL, `price` INTEGER NOT NULL, `date` TEXT NOT NULL, `tradeId` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL)
+                """.trimIndent())
+            }
+        }
+        val MIGRATION_3_4 = object : Migration(3,4) { // https://developer.android.com/training/data-storage/room/migrating-db-versions?hl=ko
+            override fun migrate(database: SupportSQLiteDatabase) {
+                database.execSQL("""
+                CREATE TABLE `StockMine` (`stockId` TEXT NOT NULL, `volumn` INTEGER NOT NULL, `price` INTEGER NOT NULL, `startDate` TEXT NOT NULL, PRIMARY KEY(`stockId`))
+                """.trimIndent())
             }
         }
     }

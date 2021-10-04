@@ -20,20 +20,19 @@ class StockViewModel(application: Application ) : AndroidViewModel(application) 
         }
 
 
-    private val stockList = listOf("005930", "027740", "068270", "032350")
     val stockLiveData =
         stockRepository.getStockListFlow().map { it.map { it.toStock() }.sortedBy { it.name } }
             .asLiveData()
     fun getStockInfo() {
         viewModelScope.launch {
-            stockRepository.requestStockInfo(stockList)
+            stockRepository.requestStockInfo()
         }
     }
 
     fun autoRefresh(){
         viewModelScope.launch {
             while (true){
-                stockRepository.requestStockInfo(stockList)
+                stockRepository.requestStockInfo()
                 delay(60000)
             }
         }
