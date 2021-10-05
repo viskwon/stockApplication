@@ -28,10 +28,9 @@ class MyStockFragment : Fragment() {
         viewModel = ViewModelProvider(this).get(MyStockViewModel::class.java)
         val adapter = MyStockAdapter()
         binding.mystockRecyclerView.adapter = adapter
-        lifecycleScope.launch {
-            viewModel.myStocksLive().observe(viewLifecycleOwner){
-                adapter.setData(it)
-            }
+
+        viewModel.myStocksLive().observe(viewLifecycleOwner) {
+            adapter.setData(it)
         }
 
         return binding.root
@@ -49,7 +48,11 @@ class MyStockFragment : Fragment() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         findNavController().navigate(R.id.main_to_addtrade)
-
         return false
+    }
+
+    override fun onResume() {
+        super.onResume()
+        viewModel.autoRefresh()
     }
 }

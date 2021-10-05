@@ -23,19 +23,20 @@ class MyStockViewModel (application: Application) : AndroidViewModel(application
         }
 
 
-    suspend fun myStocksLive() = stockRepository.myStockListFlow() // Todo fix flexible
+    fun myStocksLive() = stockRepository.myStockListFlow() // Todo fix flexible
         .combine(stockRepository.getMyStockFlow()) { stockInfo: List<StockInfo>, stockMine: List<StockMine> ->
-            stockMine.map {
+            stockMine.mapNotNull {
                 val id = it.stockId
-                val info = stockInfo.find { id == it.stockId }!!
-                MyStock(
-                    info.name,
-                    info.currentPrice,
-                    it.price,
-                    it.volumn,
-                    it.price - info.currentPrice,
-                    it.price / info.currentPrice * 100
-                )
+                stockInfo.find { id == it.stockId }?.run {
+                    MyStock(
+                        name,
+                        currentPrice,
+                        it.price,
+                        it.volumn,
+                        it.price - currentPrice,
+                        it.price / currentPrice * 100
+                    )
+                }
             }
         }.asLiveData()
 

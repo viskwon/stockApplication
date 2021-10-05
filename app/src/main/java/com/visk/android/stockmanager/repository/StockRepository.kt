@@ -16,9 +16,12 @@ import java.util.*
 
 class StockRepository(val remoteDataSource : StockRemoteDataSource , val stockDao: StockDao ) {
     fun getStockListFlow() = stockDao.getStockInfoFlow().distinctUntilChanged()
-    suspend fun myStockListFlow() : Flow<List<StockInfo>>{
-        return stockDao.getStockInfoFlow(stockDao.getMyStockIds()).distinctUntilChanged()
-    }
+    fun myStockListFlow() =
+        stockDao.getMyStockIdFlow().distinctUntilChanged().flatMapConcat {
+            stockDao.getStockInfoFlow(it).distinctUntilChanged()
+        }
+
+
     fun getMyStockFlow() = stockDao.getMyStockFlow().distinctUntilChanged()
 
     @OptIn(ExperimentalCoroutinesApi::class)
