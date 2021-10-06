@@ -31,10 +31,10 @@ class MyStockViewModel (application: Application) : AndroidViewModel(application
                     MyStock(
                         name,
                         currentPrice,
-                        it.price,
+                        it.totalPrice / it.volumn,
                         it.volumn,
-                        it.price - currentPrice,
-                        it.price / currentPrice * 100
+                        it.totalPrice / it.volumn - currentPrice,
+                        it.totalPrice / it.volumn / currentPrice * 100
                     )
                 }
             }

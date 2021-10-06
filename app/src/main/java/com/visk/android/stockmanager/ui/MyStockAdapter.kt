@@ -49,9 +49,12 @@ class MyStockAdapter() :
 
         val nameText = itemView.findViewById<TextView>(R.id.mystock_name)
         val currentPriceText = itemView.findViewById<TextView>(R.id.mystock_currnet_price)
-        val buyPrice = itemView.findViewById<TextView>(R.id.mystock_byprice)
+        val buyPrice = itemView.findViewById<TextView>(R.id.mystock_buyprice)
         val volmun = itemView.findViewById<TextView>(R.id.mystock_volumn)
-        val total = itemView.findViewById<TextView>(R.id.mystock_total)
+        val buytotal = itemView.findViewById<TextView>(R.id.mystock_buytotal)
+        val currentTotal = itemView.findViewById<TextView>(R.id.mystock_total)
+        val netTotal = itemView.findViewById<TextView>(R.id.net_total)
+        val netPercent = itemView.findViewById<TextView>(R.id.net_percent)
 
 
         fun bind(myStock: MyStock) {
@@ -59,7 +62,10 @@ class MyStockAdapter() :
             currentPriceText.text = myStock.currentPrice.toString()
             buyPrice.text = myStock.buyPrice.toString()
             volmun.text = myStock.volume.toString()
-            total.text = (myStock.buyPrice * myStock.volume).toString()
+            buytotal.text = (myStock.buyPrice * myStock.volume).toString()
+            currentTotal.text = (myStock.currentPrice * myStock.volume).toString()
+            netTotal.text = ((myStock.currentPrice  - myStock.buyPrice) * myStock.volume).toString()
+            netPercent.text = (myStock.currentPrice.toFloat() / myStock.buyPrice.toFloat()).toString()
         }
 
     }

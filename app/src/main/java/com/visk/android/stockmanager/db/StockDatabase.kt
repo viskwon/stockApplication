@@ -1,6 +1,10 @@
 package com.visk.android.stockmanager.db
 
+import android.content.ContentValues
 import android.content.Context
+import android.database.sqlite.SQLiteDatabase
+import android.util.Log
+import androidx.collection.ArrayMap
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
@@ -11,7 +15,7 @@ import com.visk.android.stockmanager.db.dao.UserDao
 import com.visk.android.stockmanager.db.entity.*
 
 
-@Database(entities = arrayOf(StockInfo::class, StockNote::class, User::class , StockTrade::class,StockMine::class), version = 4 , exportSchema = true)
+@Database(entities = arrayOf(StockInfo::class, StockNote::class, User::class , StockTrade::class,StockMine::class), version = 5 , exportSchema = true)
 public abstract class StockDatabase  : RoomDatabase(){
 
     abstract fun userDao() : UserDao
@@ -31,7 +35,7 @@ public abstract class StockDatabase  : RoomDatabase(){
                     context.applicationContext,
                     StockDatabase::class.java,
                     "stock_database"
-                ).addMigrations(MIGRATION_1_2, MIGRATION_2_3, MIGRATION_3_4).enableMultiInstanceInvalidation().build()
+                ).addMigrations(MIGRATION_1_2, MIGRATION_2_3, MIGRATION_3_4,MIGRATION_4_5).enableMultiInstanceInvalidation().build()
                 INSTANCE = instance
                 // return instance
                 instance
@@ -51,18 +55,60 @@ public abstract class StockDatabase  : RoomDatabase(){
             }
         }
 
-        val MIGRATION_2_3 = object : Migration(2, 3) { // https://developer.android.com/training/data-storage/room/migrating-db-versions?hl=ko
+        val MIGRATION_2_3 = object : Migration(2, 3) {
             override fun migrate(database: SupportSQLiteDatabase) {
                 database.execSQL("""
                 CREATE TABLE `StockTrade` (`stockId` TEXT NOT NULL, `volumn` INTEGER NOT NULL, `price` INTEGER NOT NULL, `date` TEXT NOT NULL, `tradeId` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL)
                 """.trimIndent())
             }
         }
-        val MIGRATION_3_4 = object : Migration(3,4) { // https://developer.android.com/training/data-storage/room/migrating-db-versions?hl=ko
+        val MIGRATION_3_4 = object : Migration(3,4) {
             override fun migrate(database: SupportSQLiteDatabase) {
                 database.execSQL("""
                 CREATE TABLE `StockMine` (`stockId` TEXT NOT NULL, `volumn` INTEGER NOT NULL, `price` INTEGER NOT NULL, `startDate` TEXT NOT NULL, PRIMARY KEY(`stockId`))
                 """.trimIndent())
+            }
+        }
+
+        val MIGRATION_4_5 = object : Migration(4,5) {
+            override fun migrate(database: SupportSQLiteDatabase) {
+                database.query("")
+                database.execSQL("""
+                CREATE TABLE `StockMineTemp` (`stockId` TEXT NOT NULL, `volumn` INTEGER NOT NULL, `totalPrice` INTEGER NOT NULL DEFAULT '0', `startDate` TEXT NOT NULL, PRIMARY KEY(`stockId`))
+                """.trimIndent())
+                database.execSQL("""
+                INSERT INTO StockMineTemp (stockId, volumn, startDate)
+                SELECT stockId, volumn, startDate FROM StockMine
+                """.trimIndent())
+                database.execSQL("DROP TABLE StockMine")
+                database.execSQL("ALTER TABLE StockMineTemp RENAME TO StockMine")
+                val cursor = database.query("SELECT * FROM StockTrade")
+                val pair = ArrayMap<String , Int>()
+
+
+                if(cursor.moveToFirst()){
+                    var stock = cursor.getString(cursor.getColumnIndex("stockId"))
+                    var vol = cursor.getInt(cursor.getColumnIndex("volumn"))
+                    var price = cursor.getInt(cursor.getColumnIndex("price"))
+                    pair.get(stock)?.run {  }?: pair.put(stock,price*vol)
+                    while (cursor.moveToNext()){
+                        stock = cursor.getString(cursor.getColumnIndex("stockId"))
+                        vol = cursor.getInt(cursor.getColumnIndex("volumn"))
+                        price = cursor.getInt(cursor.getColumnIndex("price"))
+                        pair.get(stock)?.let { pair.put(stock, price * vol + it) } ?: pair.put(
+                            stock,
+                            price * vol
+                        )
+                    }
+                    pair.forEach {
+                        Log.d("hjskwon","${it.key} ${it.value}")
+                        Log.d("hjskwon","UPDATE StockMine SET totalPrice = ${it.value} WHERE stockId = \"${it.key}\"")
+                        Log.d("hjskwon","UPDATE StockMine SET totalPrice = ${it.value} WHERE stockId = '${it.key}'")
+
+                        database.execSQL("UPDATE StockMine SET totalPrice = ${it.value} WHERE stockId = \"${it.key}\"")
+                    }
+                }
+
             }
         }
     }
