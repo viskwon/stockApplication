@@ -58,7 +58,7 @@ class StockRepository(val remoteDataSource : StockRemoteDataSource , val stockDa
     }
 
     suspend fun addTrade(stockId: String, price: Int, volume: Int, date: String) {
-        stockDao.insertTrade(StockTrade(stockId, volume, price , date))
+        stockDao.insertTrade(StockTrade(stockId, price, volume , date))
         val stockMine = stockDao.getStockMine(stockId)?.apply {
             totalPrice = totalPrice +  price * volume
             this.volumn = volumn + this.volumn
