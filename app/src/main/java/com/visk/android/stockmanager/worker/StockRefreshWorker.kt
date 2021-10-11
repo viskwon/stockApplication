@@ -33,7 +33,7 @@ class StockRefreshWorker (appContext: Context, workerParams: WorkerParameters):
             notify(31232, nono.build())
         }
 
-        if(stockList.get(0).currentPrice > 29500){
+        if(stockList.isNotEmpty() && stockList.get(0).currentPrice > 29500){
             Log.d("hjskwon","hjskwon here")
              val noti = NotificationCompat.Builder(applicationContext, "priceNoti")
                  .setSmallIcon(R.mipmap.ic_launcher)

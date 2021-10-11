@@ -14,7 +14,8 @@ import kotlinx.coroutines.withContext
 import java.text.SimpleDateFormat
 import java.util.*
 
-class StockRepository(val remoteDataSource : StockRemoteDataSource , val stockDao: StockDao ) {
+@FlowPreview
+class StockRepository(val remoteDataSource : StockRemoteDataSource, val stockDao: StockDao ) {
     fun getStockListFlow() = stockDao.getStockInfoFlow().distinctUntilChanged()
     fun myStockListFlow() =
         stockDao.getMyStockIdFlow().distinctUntilChanged().flatMapConcat {
@@ -26,32 +27,31 @@ class StockRepository(val remoteDataSource : StockRemoteDataSource , val stockDa
 
     @OptIn(ExperimentalCoroutinesApi::class)
     suspend fun requestStockInfo() : List<StockInfo>{
-       return withContext(Dispatchers.IO)
-       {
-           val resultList = stockDao.getStockIds().asFlow().flatMapMerge {
-               flow {
-                   val response = remoteDataSource.getStockInfo(it)
-                   emit(response)
-               }
-           }.toList()
-           val stockList = resultList.map { it.mapStock() }
-           stockDao.insertStock(stockList)
-           stockList
-       }
+        return withContext(Dispatchers.IO)
+        {
+             requestStock(stockDao.getStockIds())
+        }
     }
 
     @OptIn(ExperimentalCoroutinesApi::class)
-    suspend fun requestStockInfo(ids:List<String>) {
+    suspend fun requestMyStockInfo() {
         withContext(Dispatchers.IO)
         {
-            val resultList = stockDao.getStockIds().asFlow().flatMapMerge {
+            requestStock(stockDao.getMyStockIds())
+        }
+    }
+    private suspend fun requestStock(ids: List<String>): List<StockInfo> {
+        return kotlin.runCatching {
+            val response = ids.asFlow().flatMapMerge {
                 flow {
                     val response = remoteDataSource.getStockInfo(it)
                     emit(response)
                 }
             }.toList()
-            stockDao.insertStock(resultList.map { it.mapStock() })
-        }
+            val list = response.map { it.mapStock() }
+            stockDao.insertStock(list)
+            list
+        }.getOrElse { emptyList() }
     }
 
     suspend fun addStock(stockId: String) {

@@ -44,8 +44,7 @@ class MyStockViewModel (application: Application) : AndroidViewModel(application
     fun autoRefresh(){
         viewModelScope.launch {
             while (true){
-                val ids =  stockRepository.getMyStockFlow().first().map { it.stockId }
-                stockRepository.requestStockInfo(ids)
+                stockRepository.requestMyStockInfo()
                 delay(10000)
             }
         }
