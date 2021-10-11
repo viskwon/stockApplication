@@ -25,8 +25,8 @@ class StockRepository(val remoteDataSource : StockRemoteDataSource , val stockDa
     fun getMyStockFlow() = stockDao.getMyStockFlow().distinctUntilChanged()
 
     @OptIn(ExperimentalCoroutinesApi::class)
-    suspend fun requestStockInfo() {
-       withContext(Dispatchers.IO)
+    suspend fun requestStockInfo() : List<StockInfo>{
+       return withContext(Dispatchers.IO)
        {
            val resultList = stockDao.getStockIds().asFlow().flatMapMerge {
                flow {
@@ -34,7 +34,9 @@ class StockRepository(val remoteDataSource : StockRemoteDataSource , val stockDa
                    emit(response)
                }
            }.toList()
-           stockDao.insertStock(resultList.map { it.mapStock() })
+           val stockList = resultList.map { it.mapStock() }
+           stockDao.insertStock(stockList)
+           stockList
        }
     }
 

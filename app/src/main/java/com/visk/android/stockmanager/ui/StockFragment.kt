@@ -2,6 +2,7 @@ package com.visk.android.stockmanager.ui
 
 import android.content.DialogInterface
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import android.widget.EditText
 import androidx.appcompat.app.AlertDialog
@@ -11,6 +12,7 @@ import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
+import androidx.work.WorkManager
 import com.visk.android.stockmanager.viewmodel.StockViewModel
 import com.google.android.material.appbar.CollapsingToolbarLayout
 import com.visk.android.stockmanager.R
@@ -62,6 +64,9 @@ class StockFragment : Fragment() {
             adapter.setData(it)
         })
         viewModel.autoRefresh()
+        WorkManager.getInstance(requireContext()).getWorkInfosForUniqueWork("periodic").get().forEach {
+            Log.d("hjskwon" ,"workmanager ${it.state} ${it.progress}")
+        }
         return view
     }
 

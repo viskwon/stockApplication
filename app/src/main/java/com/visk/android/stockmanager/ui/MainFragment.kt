@@ -20,8 +20,6 @@ class MainFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-
-
         super.onCreateView(inflater, container, savedInstanceState)
         binding = MainFragmentBinding.inflate(inflater)
         binding.mainTab.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
