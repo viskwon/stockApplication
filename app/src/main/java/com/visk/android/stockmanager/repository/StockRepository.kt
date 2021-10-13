@@ -1,5 +1,6 @@
 package com.visk.android.stockmanager.repository
 
+import android.util.Log
 import com.visk.android.stockmanager.db.entity.StockInfo
 import com.visk.android.stockmanager.db.dao.StockDao
 import com.visk.android.stockmanager.db.entity.StockMine
@@ -59,7 +60,13 @@ class StockRepository(val remoteDataSource : StockRemoteDataSource, val stockDao
         stockDao.insertStock(response.mapStock())
     }
 
-    suspend fun addTrade(stockId: String, price: Int, volume: Int, date: String) {
+    suspend fun getStockCode(name : String) = remoteDataSource.getStockCode(name)
+
+
+
+    suspend fun addTrade(name: String, price: Int, volume: Int, date: String) {
+        val stockId = stockDao.getStockId(name.trim())
+        Log.d("hjskwon","stockId $stockId")
         stockDao.insertTrade(StockTrade(stockId, price, volume , date))
         val stockMine = stockDao.getStockMine(stockId)?.apply {
             totalPrice = totalPrice +  price * volume

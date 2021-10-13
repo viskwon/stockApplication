@@ -49,8 +49,12 @@ class StockViewModel(application: Application ) : AndroidViewModel(application) 
         updateTime
     )
 
-    fun addStock (stockId : String){
+    fun addStock (input : String){
         viewModelScope.launch {
+            val stockId = input.toIntOrNull()?.run {
+                toString()
+            } ?: stockRepository.getStockCode(input)
+
             stockRepository.addStock(stockId)
         }
     }
