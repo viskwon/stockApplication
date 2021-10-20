@@ -43,6 +43,7 @@ public abstract class StockDatabase  : RoomDatabase(){
         }
         val MIGRATION_1_2 = object : Migration(1, 2) { // https://developer.android.com/training/data-storage/room/migrating-db-versions?hl=ko
             override fun migrate(database: SupportSQLiteDatabase) {
+                Log.d("hjskwon","mi 12")
                 database.execSQL("""
                 CREATE TABLE `StockInfo_temp` (`stockId` TEXT NOT NULL, `name` TEXT NOT NULL, `currentPrice` INTEGER NOT NULL, `yesterdayPrice` INTEGER NOT NULL, `tradeVolume` INTEGER NOT NULL, `diffPercent` REAL NOT NULL, `todayHigh` INTEGER NOT NULL DEFAULT '0', `todayLow` INTEGER NOT NULL DEFAULT '0', `updateTime` TEXT NOT NULL, PRIMARY KEY(`stockId`))
                 """.trimIndent())
@@ -57,6 +58,7 @@ public abstract class StockDatabase  : RoomDatabase(){
 
         val MIGRATION_2_3 = object : Migration(2, 3) {
             override fun migrate(database: SupportSQLiteDatabase) {
+                Log.d("hjskwon","mi 23")
                 database.execSQL("""
                 CREATE TABLE `StockTrade` (`stockId` TEXT NOT NULL, `volumn` INTEGER NOT NULL, `price` INTEGER NOT NULL, `date` TEXT NOT NULL, `tradeId` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL)
                 """.trimIndent())
@@ -64,6 +66,7 @@ public abstract class StockDatabase  : RoomDatabase(){
         }
         val MIGRATION_3_4 = object : Migration(3,4) {
             override fun migrate(database: SupportSQLiteDatabase) {
+                Log.d("hjskwon","mi 34")
                 database.execSQL("""
                 CREATE TABLE `StockMine` (`stockId` TEXT NOT NULL, `volumn` INTEGER NOT NULL, `price` INTEGER NOT NULL, `startDate` TEXT NOT NULL, PRIMARY KEY(`stockId`))
                 """.trimIndent())
@@ -72,6 +75,7 @@ public abstract class StockDatabase  : RoomDatabase(){
 
         val MIGRATION_4_5 = object : Migration(4,5) {
             override fun migrate(database: SupportSQLiteDatabase) {
+                Log.d("hjskwon","mi 45")
                 database.query("")
                 database.execSQL("""
                 CREATE TABLE `StockMineTemp` (`stockId` TEXT NOT NULL, `volumn` INTEGER NOT NULL, `totalPrice` INTEGER NOT NULL DEFAULT '0', `startDate` TEXT NOT NULL, PRIMARY KEY(`stockId`))

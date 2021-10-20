@@ -16,6 +16,14 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments += ["room.schemaLocation": "$projectDir/schemas".toString()]
+            }
+        }
+
     }
     dataBinding {
         enabled true
@@ -103,7 +111,7 @@ dependencies {
     implementation "com.google.android.material:material:$rootProject.materialVersion"
 
 
-
+    testImplementation("androidx.room:room-testing:2.3.0")
     implementation 'com.google.dagger:dagger:2.30.1'
     kapt 'com.google.dagger:dagger-compiler:2.30.1'
     // Testing
