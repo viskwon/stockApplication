@@ -4,6 +4,7 @@ import android.content.Context
 import android.util.Log
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
+import androidx.hilt.work.HiltWorker
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
 import com.visk.android.stockmanager.R
@@ -11,14 +12,19 @@ import com.visk.android.stockmanager.StockApplication
 import com.visk.android.stockmanager.db.StockDatabase
 import com.visk.android.stockmanager.repository.StockRepository
 import com.visk.android.stockmanager.stock.StockRemoteDataSource
+import dagger.assisted.Assisted
+import dagger.assisted.AssistedInject
+import javax.inject.Inject
 
-class StockRefreshWorker (appContext: Context, workerParams: WorkerParameters):
-    CoroutineWorker(appContext, workerParams) {
-    val database by lazy { StockDatabase.getDatabase(appContext) }
-    val stockRepository by lazy { StockRepository(StockRemoteDataSource(), database.stockDao()) }
+@HiltWorker
+class StockRefreshWorker @AssistedInject constructor(
+    @Assisted appContext: Context,
+    @Assisted workerParams: WorkerParameters,
+    val stockRepository: StockRepository
+) : CoroutineWorker(appContext, workerParams) {
 
     override suspend fun doWork(): Result {
-        Log.d("hjskwon","hjskwon doWork")
+        Log.d("hjskwon","hjskwon doWork $stockRepository")
         val stockList = stockRepository.requestStockInfo()
 
         val nono = NotificationCompat.Builder(applicationContext, "priceNoti")

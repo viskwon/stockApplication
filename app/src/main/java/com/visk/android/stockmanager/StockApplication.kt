@@ -4,21 +4,29 @@ import android.app.Application
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Context
-import android.os.Build
+import androidx.hilt.work.HiltWorkerFactory
+import androidx.work.Configuration
 import androidx.work.ExistingPeriodicWorkPolicy
 import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
 import com.visk.android.stockmanager.db.StockDatabase
 import com.visk.android.stockmanager.repository.StockRepository
-import com.visk.android.stockmanager.repository.UserRepository
-import com.visk.android.stockmanager.stock.StockRemoteDataSource
 import com.visk.android.stockmanager.worker.StockRefreshWorker
+import dagger.hilt.android.HiltAndroidApp
 import java.util.concurrent.TimeUnit
+import javax.inject.Inject
 
-class StockApplication :Application(){
+@HiltAndroidApp
+class StockApplication :Application(), Configuration.Provider{
+    @Inject
+    lateinit var workerFactory: HiltWorkerFactory
 
-    val database by lazy { StockDatabase.getDatabase(this) }
-    val stockRepository by lazy { StockRepository(StockRemoteDataSource(), database.stockDao()) }
+    override fun getWorkManagerConfiguration() =
+        Configuration.Builder()
+            .setWorkerFactory(workerFactory)
+            .build()
+    @Inject
+    lateinit var stockRepository: StockRepository
 
     override fun onCreate() {
         super.onCreate()
@@ -28,7 +36,7 @@ class StockApplication :Application(){
     fun startAutoRefresh(){
         val work =  PeriodicWorkRequestBuilder<StockRefreshWorker>(15 , TimeUnit.MINUTES).build()
         WorkManager.getInstance(applicationContext)
-            .enqueueUniquePeriodicWork("periodic", ExistingPeriodicWorkPolicy.KEEP, work)
+            .enqueueUniquePeriodicWork("periodic", ExistingPeriodicWorkPolicy.REPLACE, work)
 
     }
 

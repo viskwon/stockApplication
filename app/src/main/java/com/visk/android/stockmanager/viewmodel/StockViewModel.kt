@@ -1,6 +1,7 @@
 package com.visk.android.stockmanager.viewmodel
 
 import android.app.Application
+import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
@@ -25,6 +26,7 @@ class StockViewModel(application: Application ) : AndroidViewModel(application) 
             .asLiveData()
     fun getStockInfo() {
         viewModelScope.launch {
+            Log.d("hjskwon", "StockViewModel ${stockRepository}")
             stockRepository.requestStockInfo()
         }
     }

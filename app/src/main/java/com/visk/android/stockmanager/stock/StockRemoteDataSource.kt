@@ -8,8 +8,9 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.converter.scalars.ScalarsConverterFactory
+import javax.inject.Inject
 
-class StockRemoteDataSource {
+class StockRemoteDataSource @Inject constructor(){
     private val okHttpClient = OkHttpClient.Builder()
         .addInterceptor(HttpLoggingInterceptor().apply {
             level = HttpLoggingInterceptor.Level.BODY

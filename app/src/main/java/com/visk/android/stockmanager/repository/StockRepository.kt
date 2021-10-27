@@ -14,9 +14,12 @@ import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.withContext
 import java.text.SimpleDateFormat
 import java.util.*
+import javax.inject.Inject
+import javax.inject.Singleton
 
 @FlowPreview
-class StockRepository(val remoteDataSource : StockRemoteDataSource, val stockDao: StockDao ) {
+@Singleton
+class StockRepository  @Inject constructor(val remoteDataSource : StockRemoteDataSource, val stockDao: StockDao ) {
     fun getStockListFlow() = stockDao.getStockInfoFlow().distinctUntilChanged()
     fun myStockListFlow() =
         stockDao.getMyStockIdFlow().distinctUntilChanged().flatMapConcat {

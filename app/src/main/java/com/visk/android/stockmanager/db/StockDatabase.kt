@@ -1,8 +1,6 @@
 package com.visk.android.stockmanager.db
 
-import android.content.ContentValues
 import android.content.Context
-import android.database.sqlite.SQLiteDatabase
 import android.util.Log
 import androidx.collection.ArrayMap
 import androidx.room.Database
@@ -10,18 +8,21 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
+import com.visk.android.stockmanager.db.StockDatabase.Companion.DATABASE_VERSION
 import com.visk.android.stockmanager.db.dao.StockDao
 import com.visk.android.stockmanager.db.dao.UserDao
 import com.visk.android.stockmanager.db.entity.*
 
 
-@Database(entities = arrayOf(StockInfo::class, StockNote::class, User::class , StockTrade::class,StockMine::class), version = 5 , exportSchema = true)
+@Database(entities = arrayOf(StockInfo::class, StockNote::class, User::class , StockTrade::class,StockMine::class), version = DATABASE_VERSION , exportSchema = true)
 public abstract class StockDatabase  : RoomDatabase(){
 
     abstract fun userDao() : UserDao
     abstract fun stockDao() : StockDao
 
     companion object {
+        const val DATABASE_NAME = "stock_database"
+        const val DATABASE_VERSION = 5
         // Singleton prevents multiple instances of database opening at the
         // same time.
         @Volatile
@@ -34,7 +35,7 @@ public abstract class StockDatabase  : RoomDatabase(){
                 val instance = Room.databaseBuilder(
                     context.applicationContext,
                     StockDatabase::class.java,
-                    "stock_database"
+                    DATABASE_NAME
                 ).addMigrations(MIGRATION_1_2, MIGRATION_2_3, MIGRATION_3_4,MIGRATION_4_5).enableMultiInstanceInvalidation().build()
                 INSTANCE = instance
                 // return instance
