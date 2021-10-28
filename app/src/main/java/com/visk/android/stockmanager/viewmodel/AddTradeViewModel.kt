@@ -6,15 +6,17 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.visk.android.stockmanager.StockApplication
 import com.visk.android.stockmanager.repository.StockRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.*
+import javax.inject.Inject
 
-class AddTradeViewModel(application: Application) : AndroidViewModel(application){
-    private val stockRepository: StockRepository
-        get() {
-            return getApplication<StockApplication>().stockRepository
-        }
+@HiltViewModel
+class AddTradeViewModel @Inject constructor(
+    val stockRepository: StockRepository,
+    application: Application
+) : AndroidViewModel(application) {
 
     suspend fun addTrade(stockId: String, price: String, volume: String, date: Long) {
 

@@ -9,21 +9,22 @@ import com.visk.android.stockmanager.StockApplication
 import com.visk.android.stockmanager.db.entity.StockInfo
 import com.visk.android.stockmanager.domain.Stock
 import com.visk.android.stockmanager.repository.StockRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class StockViewModel(application: Application ) : AndroidViewModel(application) {
-
-    private val stockRepository: StockRepository
-        get() {
-           return getApplication<StockApplication>().stockRepository
-        }
-
+@HiltViewModel
+class StockViewModel @Inject constructor(
+    private val stockRepository: StockRepository,
+    application: Application
+) : AndroidViewModel(application) {
 
     val stockLiveData =
         stockRepository.getStockListFlow().map { it.map { it.toStock() }.sortedBy { it.name } }
             .asLiveData()
+
     fun getStockInfo() {
         viewModelScope.launch {
             Log.d("hjskwon", "StockViewModel ${stockRepository}")
@@ -31,9 +32,9 @@ class StockViewModel(application: Application ) : AndroidViewModel(application) 
         }
     }
 
-    fun autoRefresh(){
+    fun autoRefresh() {
         viewModelScope.launch {
-            while (true){
+            while (true) {
                 stockRepository.requestStockInfo()
                 delay(60000)
             }
@@ -51,7 +52,7 @@ class StockViewModel(application: Application ) : AndroidViewModel(application) 
         updateTime
     )
 
-    fun addStock (input : String){
+    fun addStock(input: String) {
         viewModelScope.launch {
             val stockId = input.toIntOrNull()?.run {
                 toString()

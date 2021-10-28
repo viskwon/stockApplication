@@ -10,15 +10,18 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AlertDialogLayout
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
 import androidx.work.WorkManager
 import com.visk.android.stockmanager.viewmodel.StockViewModel
 import com.google.android.material.appbar.CollapsingToolbarLayout
 import com.visk.android.stockmanager.R
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class StockFragment : Fragment() {
-    lateinit var viewModel: StockViewModel
+    val viewModel: StockViewModel by viewModels()
 
     private fun initActionBar(view: View) {
         val activity = (activity as AppCompatActivity)
@@ -47,7 +50,6 @@ class StockFragment : Fragment() {
     ): View? {
 
         val view = inflater.inflate(R.layout.stock_list_layout, container, false)
-        viewModel = ViewModelProvider(this).get(StockViewModel::class.java)
 
         initActionBar(view)
         val recyclerView = view.findViewById<RecyclerView>(R.id.stock_recycler_view)

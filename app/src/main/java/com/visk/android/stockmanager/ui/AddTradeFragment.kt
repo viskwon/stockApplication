@@ -5,18 +5,18 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.visk.android.stockmanager.databinding.AddTradeFragmentBinding
 import com.visk.android.stockmanager.viewmodel.AddTradeViewModel
-import com.visk.android.stockmanager.viewmodel.StockViewModel
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
-
+@AndroidEntryPoint
 class AddTradeFragment : Fragment() {
     lateinit var binding: AddTradeFragmentBinding
-    lateinit var viewModel: AddTradeViewModel
+    val viewModel: AddTradeViewModel by viewModels()
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -34,9 +34,6 @@ class AddTradeFragment : Fragment() {
                 findNavController().popBackStack()
             }
         }
-        viewModel = ViewModelProvider(this).get(AddTradeViewModel::class.java)
         return binding.root
     }
-
-
 }

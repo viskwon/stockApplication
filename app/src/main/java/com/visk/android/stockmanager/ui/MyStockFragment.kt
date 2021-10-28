@@ -7,17 +7,20 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.visk.android.stockmanager.R
 import com.visk.android.stockmanager.databinding.MyStockFragmentBinding
 import com.visk.android.stockmanager.viewmodel.MyStockViewModel
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
-
+import javax.inject.Inject
+@AndroidEntryPoint
 class MyStockFragment : Fragment() {
     lateinit var binding: MyStockFragmentBinding
-    lateinit var viewModel:MyStockViewModel
+    val viewModel:MyStockViewModel by viewModels()
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -25,7 +28,6 @@ class MyStockFragment : Fragment() {
     ): View {
         binding = MyStockFragmentBinding.inflate(inflater)
         initActionBar(binding.toolbar)
-        viewModel = ViewModelProvider(this).get(MyStockViewModel::class.java)
         val adapter = MyStockAdapter()
         binding.mystockRecyclerView.adapter = adapter
 
