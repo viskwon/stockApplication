@@ -5,11 +5,18 @@ import androidx.room.Room
 import androidx.sqlite.db.framework.FrameworkSQLiteOpenHelperFactory
 import com.visk.android.stockmanager.db.StockDatabase
 import com.visk.android.stockmanager.db.dao.StockDao
+import com.visk.android.stockmanager.stock.StockRetrofit
+import com.visk.android.stockmanager.stock.StockSearchRetrofit
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
+import retrofit2.converter.scalars.ScalarsConverterFactory
 
 
 @Module
@@ -36,4 +43,24 @@ object StockModule {
     ): StockDao {
         return stockDatabase.stockDao()
     }
+
+    @Provides
+    fun provideStockRetrofit(okHttpClient: OkHttpClient) = Retrofit.Builder()
+        .baseUrl("https://polling.finance.naver.com/")
+        .client(okHttpClient)
+        .addConverterFactory(GsonConverterFactory.create())
+        .build().create(StockRetrofit::class.java)
+
+    @Provides
+    fun provideSearchRetrofit(okHttpClient: OkHttpClient) = Retrofit.Builder()
+        .baseUrl("https://search.naver.com/")
+        .client(okHttpClient)
+        .addConverterFactory(ScalarsConverterFactory.create())
+        .build().create(StockSearchRetrofit::class.java)
+
+    @Provides
+    fun provideOkHttpClient() = OkHttpClient.Builder()
+        .addInterceptor(HttpLoggingInterceptor().apply {
+            level = HttpLoggingInterceptor.Level.BODY
+        }).build()
 }
