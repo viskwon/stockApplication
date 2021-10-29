@@ -21,7 +21,7 @@ buildscript {
         coroutines = '1.4.2'
         lifecycleVersion = '2.3.+'
         materialVersion = '1.4.+'
-        roomVersion = '2.3.+'
+        roomVersion = '2.4.+'
         // testing
         junitVersion = '4.13.+'
         espressoVersion = '3.1.0'

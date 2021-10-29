@@ -3,7 +3,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.visk.android.stockmanager">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
     <application
         android:name="com.visk.android.stockmanager.StockApplication"
         android:allowBackup="true"
@@ -11,8 +10,11 @@
         android:label="@string/app_name"
         android:roundIcon="@drawable/launch_ic"
         android:supportsRtl="true"
+
         android:theme="@style/Theme.RoomUserInfo">
-        <activity android:name="com.visk.android.stockmanager.MainActivity">
+        <activity
+            android:name="com.visk.android.stockmanager.MainActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -22,8 +24,8 @@
         <provider
             android:name="androidx.startup.InitializationProvider"
             android:authorities="${applicationId}.androidx-startup"
-            tools:node="remove">
-        </provider>
+            tools:node="remove"></provider>
     </application>
+    <uses-permission android:name="android.permission.INTERNET" />
 
 </manifest>
