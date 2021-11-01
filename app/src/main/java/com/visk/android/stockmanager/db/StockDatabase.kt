@@ -15,33 +15,15 @@ import com.visk.android.stockmanager.db.entity.*
 
 
 @Database(entities = arrayOf(StockInfo::class, StockNote::class, User::class , StockTrade::class,StockMine::class), version = DATABASE_VERSION , exportSchema = true)
-public abstract class StockDatabase  : RoomDatabase(){
+abstract class StockDatabase  : RoomDatabase(){
 
     abstract fun userDao() : UserDao
     abstract fun stockDao() : StockDao
 
     companion object {
         const val DATABASE_NAME = "stock_database"
-        const val DATABASE_VERSION = 5
-        // Singleton prevents multiple instances of database opening at the
-        // same time.
-        @Volatile
-        private var INSTANCE: StockDatabase? = null
+        const val DATABASE_VERSION = 6
 
-        fun getDatabase(context: Context): StockDatabase {
-            // if the INSTANCE is not null, then return it,
-            // if it is, then create the database
-            return INSTANCE ?: synchronized(this) {
-                val instance = Room.databaseBuilder(
-                    context.applicationContext,
-                    StockDatabase::class.java,
-                    DATABASE_NAME
-                ).addMigrations(MIGRATION_1_2, MIGRATION_2_3, MIGRATION_3_4,MIGRATION_4_5).enableMultiInstanceInvalidation().build()
-                INSTANCE = instance
-                // return instance
-                instance
-            }
-        }
         val MIGRATION_1_2 = object : Migration(1, 2) { // https://developer.android.com/training/data-storage/room/migrating-db-versions?hl=ko
             override fun migrate(database: SupportSQLiteDatabase) {
                 Log.d("hjskwon","mi 12")
@@ -111,6 +93,57 @@ public abstract class StockDatabase  : RoomDatabase(){
                         Log.d("hjskwon","UPDATE StockMine SET totalPrice = ${it.value} WHERE stockId = '${it.key}'")
 
                         database.execSQL("UPDATE StockMine SET totalPrice = ${it.value} WHERE stockId = \"${it.key}\"")
+                    }
+                }
+
+            }
+        }
+
+        val MIGRATION_5_6 = object : Migration(5,6) {
+            override fun migrate(database: SupportSQLiteDatabase) {
+                Log.d("hjskwon","mi 5>6")
+
+                val cursor = database.query("SELECT * FROM StockTrade")
+                val pair = ArrayMap<String , Int>()
+                val pairVol = ArrayMap<String , Int>()
+
+
+                if(cursor.moveToFirst()){
+                    while(!cursor.isAfterLast){
+                        val stock = cursor.getString(cursor.getColumnIndex("stockId"))
+                        val vol = cursor.getInt(cursor.getColumnIndex("volumn"))
+                        val price = cursor.getInt(cursor.getColumnIndex("price"))
+
+                        pair.get(stock)?.let { pair.put(stock, price * vol + it)} ?: pair.put(
+                            stock,
+                            price * vol
+                        )
+
+                        pairVol.get(stock)?.let { pairVol.put(stock,  vol + it)} ?: pairVol.put(
+                            stock,
+                            vol
+                        )
+                        cursor.moveToNext()
+                    }
+
+                    pair.forEach {
+                        Log.d("hjskwon","${it.key} ${it.value}")
+                        Log.d("hjskwon","UPDATE StockMine SET totalPrice = ${it.value} WHERE stockId = \"${it.key}\"")
+                        Log.d("hjskwon","UPDATE StockMine SET totalPrice = ${it.value} WHERE stockId = '${it.key}'")
+                        database.query("SELECT * FROM StockInfo WHERE stockId = \"${it.key}\"").run{
+                            if (cursor.count > 0)
+                                database.execSQL(
+                                    "UPDATE StockMine SET totalPrice = ${it.value} , volumn = ${
+                                        pairVol.get(it.key)
+                                    } WHERE stockId = \"${it.key}\""
+                                )
+                            else
+                                database.execSQL(
+                                    "DELETE StockTrade WHERE stockId = \"${it.key}\""
+                                )
+
+
+                        }
                     }
                 }
 

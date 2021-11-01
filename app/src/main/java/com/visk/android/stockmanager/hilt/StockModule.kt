@@ -33,7 +33,8 @@ object StockModule {
             StockDatabase.MIGRATION_1_2,
             StockDatabase.MIGRATION_2_3,
             StockDatabase.MIGRATION_3_4,
-            StockDatabase.MIGRATION_4_5
+            StockDatabase.MIGRATION_4_5,
+            StockDatabase.MIGRATION_5_6
         ).enableMultiInstanceInvalidation().build()
     }
 

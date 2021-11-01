@@ -66,14 +66,12 @@ class StockRepository  @Inject constructor(val remoteDataSource : StockRemoteDat
     suspend fun getStockCode(name : String) = remoteDataSource.getStockCode(name)
 
 
-
     suspend fun addTrade(name: String, price: Int, volume: Int, date: String) {
         val stockId = stockDao.getStockId(name.trim())
-        Log.d("hjskwon","stockId $stockId")
         stockDao.insertTrade(StockTrade(stockId, price, volume , date))
         val stockMine = stockDao.getStockMine(stockId)?.apply {
             totalPrice = totalPrice +  price * volume
-            this.volumn = volumn + this.volumn
+            this.volumn = volumn + volume
         }?: StockMine(stockId,volume,price * volume,date)
 
         stockDao.insertMyStock(stockMine)
