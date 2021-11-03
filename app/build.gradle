@@ -7,7 +7,10 @@ apply plugin: 'dagger.hilt.android.plugin'
 android {
     compileSdkVersion 31
     buildToolsVersion "30.0.3"
-
+    sourceSets {
+        // Adds exported schema location as test app assets.
+        androidTest.assets.srcDirs += files("$projectDir/schemas".toString())
+    }
     defaultConfig {
         applicationId "com.visk.android.stockmanager"
         minSdkVersion 26
@@ -71,7 +74,7 @@ dependencies {
     kapt 'androidx.hilt:hilt-compiler:1.0.0'
     //Workmanager
 
-    def work_version = "2.6.0"
+    def work_version = "2.7.0"
 
     // (Java only)
     implementation "androidx.work:work-runtime:$work_version"
