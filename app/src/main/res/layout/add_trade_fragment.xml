@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    >
+
 
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
@@ -78,14 +81,28 @@
             android:layout_height="wrap_content"/>
 
         <Button
-            android:id="@+id/save_trade"
+            android:id="@+id/buy_trade"
             android:layout_width="96dp"
             android:layout_height="wrap_content"
             android:textSize="17dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/sell_trade"
             app:layout_constraintTop_toBottomOf="@id/add_trade_calendar"
-            android:text="저장"/>
+            android:text="구매"
+            tools:text="구매"/>
+
+        <Button
+            android:id="@+id/sell_trade"
+            android:layout_width="96dp"
+            android:layout_height="wrap_content"
+            android:textSize="17dp"
+            app:layout_constraintStart_toEndOf="@id/buy_trade"
+            app:layout_constraintEnd_toEndOf="parent"
+
+            app:layout_constraintTop_toBottomOf="@id/add_trade_calendar"
+            android:text="판매"
+            tools:text="판매"
+            />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

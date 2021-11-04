@@ -1,9 +1,6 @@
 package com.visk.android.stockmanager.db.dao
 
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
+import androidx.room.*
 import com.visk.android.stockmanager.db.entity.StockInfo
 import com.visk.android.stockmanager.db.entity.StockMine
 import com.visk.android.stockmanager.db.entity.StockNote
@@ -57,6 +54,9 @@ interface StockDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertMyStock(stockMine: StockMine)
+
+    @Delete
+    suspend fun deleteMyStock(stockMine: StockMine)
 
 
 

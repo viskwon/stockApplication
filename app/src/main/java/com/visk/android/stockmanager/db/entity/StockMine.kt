@@ -6,7 +6,7 @@ import androidx.room.PrimaryKey
 @Entity
 class StockMine(
     @PrimaryKey var stockId: String,
-    var volumn: Int,
-    var totalPrice: Int,
-    var startDate: String
+    var volumn: Int =0,
+    var totalPrice: Int =0,
+    var startDate: String =""
 )

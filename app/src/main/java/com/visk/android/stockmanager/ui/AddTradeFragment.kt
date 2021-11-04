@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import com.visk.android.stockmanager.Constant
 import com.visk.android.stockmanager.databinding.AddTradeFragmentBinding
 import com.visk.android.stockmanager.viewmodel.AddTradeViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -23,17 +24,33 @@ class AddTradeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = AddTradeFragmentBinding.inflate(inflater)
-        binding.saveTrade.setOnClickListener {
+        binding.buyTrade.setOnClickListener {
             lifecycleScope.launch {
                 viewModel.addTrade(
                     binding.stockidEdit.text.toString(),
                     binding.priceEdit.text.toString(),
                     binding.volEdit.text.toString(),
-                    binding.addTradeCalendar.date
+                    binding.addTradeCalendar.date,
+                    Constant.Trade.BUY
                 )
                 findNavController().popBackStack()
             }
         }
+
+        binding.sellTrade.setOnClickListener {
+            lifecycleScope.launch {
+                viewModel.addTrade(
+                    binding.stockidEdit.text.toString(),
+                    binding.priceEdit.text.toString(),
+                    binding.volEdit.text.toString(),
+                    binding.addTradeCalendar.date,
+                    Constant.Trade.SELL
+                )
+                findNavController().popBackStack()
+            }
+        }
+
         return binding.root
     }
+
 }

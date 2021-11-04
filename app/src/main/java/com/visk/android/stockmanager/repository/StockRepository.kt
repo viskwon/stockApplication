@@ -1,6 +1,7 @@
 package com.visk.android.stockmanager.repository
 
 import android.util.Log
+import com.visk.android.stockmanager.Constant
 import com.visk.android.stockmanager.db.entity.StockInfo
 import com.visk.android.stockmanager.db.dao.StockDao
 import com.visk.android.stockmanager.db.entity.StockMine
@@ -66,16 +67,33 @@ class StockRepository  @Inject constructor(val remoteDataSource : StockRemoteDat
     suspend fun getStockCode(name : String) = remoteDataSource.getStockCode(name)
 
 
-    suspend fun addTrade(name: String, price: Int, volume: Int, date: String) {
+    suspend fun addTrade(name: String, price: Int, volume: Int, date: String , type : Int) {
         val stockId = stockDao.getStockId(name.trim())
-        stockDao.insertTrade(StockTrade(stockId, price, volume , date))
-        val stockMine = stockDao.getStockMine(stockId)?.apply {
-            totalPrice = totalPrice +  price * volume
-            this.volumn = volumn + volume
-        }?: StockMine(stockId,volume,price * volume,date)
+        stockDao.insertTrade(StockTrade(stockId, price, volume, date, type))
 
-        stockDao.insertMyStock(stockMine)
+        val stockMine = stockDao.getStockMine(stockId)?.apply {
+            when (type) {
+                Constant.Trade.BUY -> {
+                    totalPrice = totalPrice + price * volume
+                    this.volumn = volumn + volume
+                }
+                Constant.Trade.SELL -> {
+                    val average = totalPrice / volumn
+                    this.volumn = volumn - volume
+                    totalPrice = average * volume
+                }
+            }
+
+        } ?: StockMine(stockId, volume, price * volume, date)
+
+        if (stockMine.volumn == 0) {
+            stockDao.deleteMyStock(StockMine(stockId = stockId))
+        } else {
+            stockDao.insertMyStock(stockMine)
+        }
+
     }
+
 
     private fun StockInfoDTO.mapStock() = StockInfo(
         result.areas.get(0).datas.get(0).stockId,

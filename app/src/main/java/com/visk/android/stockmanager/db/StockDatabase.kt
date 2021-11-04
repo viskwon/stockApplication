@@ -3,6 +3,7 @@ package com.visk.android.stockmanager.db
 import android.content.Context
 import android.util.Log
 import androidx.collection.ArrayMap
+import androidx.room.AutoMigration
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
@@ -14,7 +15,17 @@ import com.visk.android.stockmanager.db.dao.UserDao
 import com.visk.android.stockmanager.db.entity.*
 
 
-@Database(entities = arrayOf(StockInfo::class, StockNote::class, User::class , StockTrade::class,StockMine::class), version = DATABASE_VERSION , exportSchema = true)
+@Database(
+    entities = arrayOf(
+        StockInfo::class,
+        StockNote::class,
+        User::class,
+        StockTrade::class,
+        StockMine::class
+    ), autoMigrations = [
+        AutoMigration(from = 6, to = 7)
+    ], version = DATABASE_VERSION, exportSchema = true
+)
 abstract class StockDatabase  : RoomDatabase(){
 
     abstract fun userDao() : UserDao
@@ -22,7 +33,7 @@ abstract class StockDatabase  : RoomDatabase(){
 
     companion object {
         const val DATABASE_NAME = "stock_database"
-        const val DATABASE_VERSION = 6
+        const val DATABASE_VERSION = 7
 
         val MIGRATION_1_2 = object : Migration(1, 2) { // https://developer.android.com/training/data-storage/room/migrating-db-versions?hl=ko
             override fun migrate(database: SupportSQLiteDatabase) {

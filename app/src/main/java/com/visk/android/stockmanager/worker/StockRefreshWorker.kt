@@ -39,7 +39,7 @@ class StockRefreshWorker @AssistedInject constructor(
             notify(31232, nono.build())
         }
 
-        if(stockList.isNotEmpty() && stockList.get(0).currentPrice > 29500){
+        if(stockList.isNotEmpty() ){
             Log.d("hjskwon","hjskwon here")
              val noti = NotificationCompat.Builder(applicationContext, "priceNoti")
                  .setSmallIcon(R.mipmap.ic_launcher)
