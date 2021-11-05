@@ -24,6 +24,7 @@ class MainFragment : Fragment() {
                 when (tab?.position) {
                     0 -> StockFragment()
                     1 -> MyStockFragment()
+                    2 -> DynamicHomeFragment()
                     else -> null
                 }?.let {
                     parentFragmentManager.commit {
