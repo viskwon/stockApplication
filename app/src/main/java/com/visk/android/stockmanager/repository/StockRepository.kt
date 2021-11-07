@@ -22,7 +22,7 @@ import javax.inject.Singleton
 @Singleton
 class StockRepository  @Inject constructor(val remoteDataSource : StockRemoteDataSource, val stockDao: StockDao ) {
     fun getStockListFlow() = stockDao.getStockInfoFlow().distinctUntilChanged()
-    fun myStockListFlow() =
+    fun myStockInfoListFlow() =
         stockDao.getMyStockIdFlow().distinctUntilChanged().flatMapConcat {
             stockDao.getStockInfoFlow(it).distinctUntilChanged()
         }

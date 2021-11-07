@@ -23,6 +23,7 @@
     <style name="actionBarStyle" parent="ThemeOverlay.AppCompat.DayNight.ActionBar">
         <item name="android:actionModeCloseButtonStyle">@style/CloseButton</item>
         <item name="windowActionModeOverlay">false</item>
+        <item name="android:background">@color/colorbarbg</item>
     </style>
 
     <style name="toolbarStyle" parent="Theme.RoomUserInfo">
