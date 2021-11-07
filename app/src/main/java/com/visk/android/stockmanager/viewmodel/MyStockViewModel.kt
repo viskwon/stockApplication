@@ -2,6 +2,7 @@ package com.visk.android.stockmanager.viewmodel
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.visk.android.stockmanager.db.entity.StockInfo
@@ -16,7 +17,6 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MyStockViewModel @Inject constructor(val stockRepository: StockRepository, application: Application) : AndroidViewModel(application){
-
 
     fun myStocksLive() = stockRepository.myStockInfoListFlow() // Todo fix flexible
         .combine(stockRepository.getMyStockFlow()) { stockInfo: List<StockInfo>, stockMine: List<StockMine> ->
@@ -33,6 +33,20 @@ class MyStockViewModel @Inject constructor(val stockRepository: StockRepository,
                     )
                 }
             }
+        }.asLiveData()
+
+
+    fun todayDiff() = stockRepository.myStockInfoListFlow()
+        .combine(stockRepository.getMyStockFlow()) { stockInfo: List<StockInfo>, stockMine: List<StockMine> ->
+
+            var todayDiff =0;
+            stockMine.forEach {
+                val id = it.stockId
+                stockInfo.find { id == it.stockId }?.run {
+                    todayDiff = todayDiff + (currentPrice - yesterdayPrice) * it.volumn
+                }
+            }
+            "$todayDiff"
         }.asLiveData()
 
 

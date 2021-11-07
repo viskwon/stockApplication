@@ -20,21 +20,23 @@ import com.visk.android.stockmanager.viewmodel.MyStockViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+
 @AndroidEntryPoint
 class MyStockFragment : Fragment() {
     lateinit var binding: MyStockFragmentBinding
-    val viewModel:MyStockViewModel by viewModels()
+    val viewModel: MyStockViewModel by viewModels()
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         binding = MyStockFragmentBinding.inflate(inflater)
+        binding.lifecycleOwner = this
         setHasOptionsMenu(true)
         initActionBar(binding.toolbar)
         val adapter = MyStockAdapter()
         binding.mystockRecyclerView.adapter = adapter
-coordinateMotion()
+        coordinateMotion()
         viewModel.myStocksLive().observe(viewLifecycleOwner) {
             adapter.setData(it)
         }
@@ -42,7 +44,7 @@ coordinateMotion()
         return binding.root
     }
 
-    private fun initActionBar(toolbar :Toolbar) {
+    private fun initActionBar(toolbar: Toolbar) {
         val activity = (activity as AppCompatActivity)
         activity.setSupportActionBar(toolbar)
         setHasOptionsMenu(true)
@@ -63,15 +65,13 @@ coordinateMotion()
     }
 
 
-
-
     private fun coordinateMotion() {
         val appBarLayout: AppBarLayout = binding.appbar
         val motionLayout: MotionLayout = binding.appbarMotionlayout
 
         val listener = AppBarLayout.OnOffsetChangedListener { unused, verticalOffset ->
             val seekPosition = -verticalOffset / appBarLayout.totalScrollRange.toFloat()
-            Log.d("hjskwon","progress $seekPosition")
+            Log.d("hjskwon", "progress $seekPosition")
             motionLayout.progress = seekPosition
         }
 

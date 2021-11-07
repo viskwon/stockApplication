@@ -25,13 +25,14 @@ class StockRefreshWorker @AssistedInject constructor(
 
     override suspend fun doWork(): Result {
         Log.d("hjskwon","hjskwon doWork $stockRepository")
-        val stockList = stockRepository.requestStockInfo()
-
         val nono = NotificationCompat.Builder(applicationContext, "priceNoti")
             .setSmallIcon(R.mipmap.ic_launcher)
             .setContentTitle("title")
             .setContentText("content")
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+
+        val stockList = stockRepository.requestStockInfo()
+
 
         with(NotificationManagerCompat.from(applicationContext)) {
             // notificationId is a unique int for each notification that you must define
