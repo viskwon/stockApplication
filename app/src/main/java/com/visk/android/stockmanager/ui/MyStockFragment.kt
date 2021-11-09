@@ -32,6 +32,7 @@ class MyStockFragment : Fragment() {
     ): View {
         binding = MyStockFragmentBinding.inflate(inflater)
         binding.lifecycleOwner = this
+        binding.viewModel = viewModel
         setHasOptionsMenu(true)
         initActionBar(binding.toolbar)
         val adapter = MyStockAdapter()
