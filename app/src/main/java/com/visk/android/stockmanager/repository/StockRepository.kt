@@ -47,15 +47,14 @@ class StockRepository  @Inject constructor(val remoteDataSource : StockRemoteDat
     }
     private suspend fun requestStock(ids: List<String>): List<StockInfo> {
         return kotlin.runCatching {
-            val response = ids.asFlow().flatMapMerge {
+            ids.asFlow().flatMapMerge {
                 flow {
-                    val response = remoteDataSource.getStockInfo(it)
-                    emit(response)
+                    remoteDataSource.getStockInfo(it).mapStock().let {
+                        stockDao.insertStock(it)
+                        emit(it)
+                    }
                 }
             }.toList()
-            val list = response.map { it.mapStock() }
-            stockDao.insertStock(list)
-            list
         }.getOrElse { emptyList() }
     }
 
