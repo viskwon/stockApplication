@@ -47,7 +47,7 @@
                 app:layout_constraintTop_toTopOf="parent">
 
 
-                <androidx.constraintlayout.motion.widget.MotionLayout
+                <com.visk.android.stockmanager.ui.custom.CollapsibleMotionLayout
                     android:id="@+id/appbar_motionlayout"
                     android:layout_width="match_parent"
                     android:layout_height="200dp"
@@ -76,7 +76,7 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/today_title" />
 
-                </androidx.constraintlayout.motion.widget.MotionLayout>
+                </com.visk.android.stockmanager.ui.custom.CollapsibleMotionLayout>
                 <!--
 
                 -->

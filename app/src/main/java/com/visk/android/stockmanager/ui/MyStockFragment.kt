@@ -37,7 +37,6 @@ class MyStockFragment : Fragment() {
         initActionBar(binding.toolbar)
         val adapter = MyStockAdapter()
         binding.mystockRecyclerView.adapter = adapter
-        coordinateMotion()
         viewModel.myStocksLive().observe(viewLifecycleOwner) {
             adapter.setData(it)
         }
@@ -63,19 +62,5 @@ class MyStockFragment : Fragment() {
     override fun onResume() {
         super.onResume()
         viewModel.autoRefresh()
-    }
-
-
-    private fun coordinateMotion() {
-        val appBarLayout: AppBarLayout = binding.appbar
-        val motionLayout: MotionLayout = binding.appbarMotionlayout
-
-        val listener = AppBarLayout.OnOffsetChangedListener { unused, verticalOffset ->
-            val seekPosition = -verticalOffset / appBarLayout.totalScrollRange.toFloat()
-            Log.d("hjskwon", "progress $seekPosition")
-            motionLayout.progress = seekPosition
-        }
-
-        appBarLayout.addOnOffsetChangedListener(listener)
     }
 }
