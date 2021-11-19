@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.visk.android.stockmanager.R
+import com.visk.android.stockmanager.databinding.StockListItemBinding
 import com.visk.android.stockmanager.domain.Stock
 
 
@@ -16,7 +17,6 @@ class StockAdapter(val listenerViewHolder: ViewHolderOnItemClickListener) :
     RecyclerView.Adapter<StockAdapter.stockViewHolder>() {
 
     private val mDiffer: AsyncListDiffer<Stock> = AsyncListDiffer(this, StockListDiffCallback())
-
 
     interface ViewHolderOnItemClickListener {
 
@@ -29,9 +29,8 @@ class StockAdapter(val listenerViewHolder: ViewHolderOnItemClickListener) :
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): stockViewHolder {
-        val viewGroup = LayoutInflater.from(parent.context)
-            .inflate(R.layout.stock_list_item, parent, false)
-        return stockViewHolder(viewGroup, listenerViewHolder)
+
+        return stockViewHolder(StockListItemBinding.inflate(LayoutInflater.from(parent.context), parent,false), listenerViewHolder)
     }
 
     override fun getItemCount(): Int {
@@ -43,23 +42,16 @@ class StockAdapter(val listenerViewHolder: ViewHolderOnItemClickListener) :
         holder.bind(mDiffer.currentList.get(position))
     }
 
-    class stockViewHolder(v: View, val listenerViewHolder: ViewHolderOnItemClickListener) :
-        RecyclerView.ViewHolder(v) {
-
-        val nameText = itemView.findViewById<TextView>(R.id.stock_name)
-        val currentPriceText = itemView.findViewById<TextView>(R.id.stock_currnet_price)
-        val tradeVolume = itemView.findViewById<TextView>(R.id.stock_currnet_trade_volume)
-
+    class stockViewHolder(val binding: StockListItemBinding, val listenerViewHolder: ViewHolderOnItemClickListener) :
+        RecyclerView.ViewHolder(binding.root) {
 
         fun bind(stockInfo: Stock) {
+            binding.stock = stockInfo
             Log.d("hjskwon", stockInfo.name)
             itemView.setOnLongClickListener {
                 listenerViewHolder.onItemLongClick()
                 true
             }
-            nameText.text = stockInfo.name
-            currentPriceText.text = stockInfo.currentPrice.toString()
-            tradeVolume.text = stockInfo.updateTime
         }
 
     }
