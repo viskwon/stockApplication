@@ -5,10 +5,7 @@ import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Context
 import androidx.hilt.work.HiltWorkerFactory
-import androidx.work.Configuration
-import androidx.work.ExistingPeriodicWorkPolicy
-import androidx.work.PeriodicWorkRequestBuilder
-import androidx.work.WorkManager
+import androidx.work.*
 import com.visk.android.stockmanager.db.StockDatabase
 import com.visk.android.stockmanager.repository.StockRepository
 import com.visk.android.stockmanager.worker.StockRefreshWorker
@@ -34,9 +31,17 @@ class StockApplication :Application(), Configuration.Provider{
         startAutoRefresh()
     }
     fun startAutoRefresh(){
-        val work =  PeriodicWorkRequestBuilder<StockRefreshWorker>(15 , TimeUnit.MINUTES).build()
-        WorkManager.getInstance(applicationContext)
-            .enqueueUniquePeriodicWork("periodic", ExistingPeriodicWorkPolicy.REPLACE, work)
+        val constraints = Constraints.Builder()
+            .setRequiredNetworkType(NetworkType.CONNECTED)
+            .setRequiresCharging(true)
+            .build()
+        val work =
+            PeriodicWorkRequestBuilder<StockRefreshWorker>(15, TimeUnit.MINUTES).setBackoffCriteria(
+                BackoffPolicy.LINEAR,
+                10,
+                TimeUnit.SECONDS
+            ).build()
+        WorkManager.getInstance(applicationContext).enqueueUniquePeriodicWork("periodic", ExistingPeriodicWorkPolicy.REPLACE, work)
 
     }
 

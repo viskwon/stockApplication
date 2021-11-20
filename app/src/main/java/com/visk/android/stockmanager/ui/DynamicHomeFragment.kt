@@ -35,6 +35,7 @@ class DynamicHomeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         return ComposeView(requireContext()).apply {
+            fitsSystemWindows = true
             setContent {
                 setContent {
                     coordinate()
@@ -109,7 +110,9 @@ class DynamicHomeFragment : Fragment() {
             // our list with build in nested scroll support that will notify us about its scroll
             LazyColumn(contentPadding = PaddingValues(top = toolbarHeight)) {
                 items(100) { index ->
-                    Text("I'm item $index", modifier = Modifier.fillMaxWidth().padding(16.dp))
+                    Text("I'm item $index", modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(16.dp))
                 }
             }
             TopAppBar(

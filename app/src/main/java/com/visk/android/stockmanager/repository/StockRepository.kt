@@ -31,12 +31,12 @@ class StockRepository  @Inject constructor(val remoteDataSource : StockRemoteDat
     fun getMyStockFlow() = stockDao.getMyStockFlow().distinctUntilChanged()
 
     @OptIn(ExperimentalCoroutinesApi::class)
-    suspend fun requestStockInfo() : List<StockInfo>{
-        return withContext(Dispatchers.IO)
+    suspend fun requestStockInfo() =
+        withContext(Dispatchers.IO)
         {
-             requestStock(stockDao.getStockIds())
+            requestStock(stockDao.getStockIds())
         }
-    }
+
 
     @OptIn(ExperimentalCoroutinesApi::class)
     suspend fun requestMyStockInfo() {
@@ -45,8 +45,8 @@ class StockRepository  @Inject constructor(val remoteDataSource : StockRemoteDat
             requestStock(stockDao.getMyStockIds())
         }
     }
-    private suspend fun requestStock(ids: List<String>): List<StockInfo> {
-        return kotlin.runCatching {
+    private suspend fun requestStock(ids: List<String>) =
+        kotlin.runCatching {
             ids.asFlow().flatMapMerge {
                 flow {
                     remoteDataSource.getStockInfo(it).mapStock().let {
@@ -55,8 +55,8 @@ class StockRepository  @Inject constructor(val remoteDataSource : StockRemoteDat
                     }
                 }
             }.toList()
-        }.getOrElse { emptyList() }
-    }
+        }
+
 
     suspend fun addStock(stockId: String) {
         val response = remoteDataSource.getStockInfo(stockId)

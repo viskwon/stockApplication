@@ -36,7 +36,7 @@ class StockViewModel @Inject constructor(
         viewModelScope.launch {
             while (true) {
                 stockRepository.requestStockInfo()
-                delay(60000)
+                delay(10000)
             }
         }
     }
