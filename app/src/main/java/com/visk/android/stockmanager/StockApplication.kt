@@ -37,9 +37,9 @@ class StockApplication :Application(), Configuration.Provider{
             .build()
         val work =
             PeriodicWorkRequestBuilder<StockRefreshWorker>(15, TimeUnit.MINUTES).setBackoffCriteria(
-                BackoffPolicy.LINEAR,
-                10,
-                TimeUnit.SECONDS
+                BackoffPolicy.LINEAR, // 10 > 20 > 30 > 간격 EXPONENTIAL 10 > 20 > 40 >80  이렇게 됨
+                PeriodicWorkRequest.MIN_BACKOFF_MILLIS,
+                TimeUnit.MILLISECONDS
             ).build()
         WorkManager.getInstance(applicationContext).enqueueUniquePeriodicWork("periodic", ExistingPeriodicWorkPolicy.REPLACE, work)
 
