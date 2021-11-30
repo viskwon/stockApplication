@@ -7,11 +7,13 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.OutlinedButton
 import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
 import androidx.compose.runtime.*
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
@@ -25,10 +27,15 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import com.visk.android.stockmanager.domain.CombineStock
+import com.visk.android.stockmanager.viewmodel.DynamicStockViewModel
+import com.visk.android.stockmanager.viewmodel.StockViewModel
+import dagger.hilt.android.AndroidEntryPoint
 import kotlin.math.roundToInt
-
+@AndroidEntryPoint
 class DynamicHomeFragment : Fragment() {
-
+    val viewModel: DynamicStockViewModel by viewModels()
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -108,13 +115,8 @@ class DynamicHomeFragment : Fragment() {
                 .nestedScroll(nestedScrollConnection)
         ) {
             // our list with build in nested scroll support that will notify us about its scroll
-            LazyColumn(contentPadding = PaddingValues(top = toolbarHeight)) {
-                items(100) { index ->
-                    Text("I'm item $index", modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(16.dp))
-                }
-            }
+            dynamicStockList()
+
             TopAppBar(
                 modifier = Modifier
                     .height(toolbarHeight)
@@ -129,5 +131,26 @@ class DynamicHomeFragment : Fragment() {
             )
         }
     }
+    @Composable
+    fun dynamicStockList() {
+        // We save the scrolling position with this state
+        val scrollState = rememberLazyListState()
+        val items: List<CombineStock> by viewModel.combineStock.observeAsState(listOf())
+        Log.d("hjskwon","${items.size}")
+        LazyColumn(contentPadding = PaddingValues(top = 150.dp)) {
+            items(items.size) {
+                item(items.get(it))
+            }
+        }
+    }
+    @Composable
+    fun item(stock : CombineStock) {
+        Column(
+            Modifier
+                .fillMaxWidth()) {
+            Text("${stock.name}")
+            Text("${stock.profit}")
 
+        }
+    }
 }

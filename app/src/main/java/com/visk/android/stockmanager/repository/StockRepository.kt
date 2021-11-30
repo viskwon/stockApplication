@@ -20,12 +20,16 @@ import javax.inject.Singleton
 
 @FlowPreview
 @Singleton
-class StockRepository  @Inject constructor(val remoteDataSource : StockRemoteDataSource, val stockDao: StockDao ) {
+class StockRepository  @Inject constructor(private val remoteDataSource : StockRemoteDataSource,private val stockDao: StockDao ) {
     fun getStockListFlow() = stockDao.getStockInfoFlow().distinctUntilChanged()
     fun myStockInfoListFlow() =
         stockDao.getMyStockIdFlow().distinctUntilChanged().flatMapConcat {
             stockDao.getStockInfoFlow(it).distinctUntilChanged()
         }
+
+    fun tradeListFlow() = stockDao.getTradeFlow()
+
+    suspend fun getStockName(id : String) = stockDao.getStockName(id)
 
 
     fun getMyStockFlow() = stockDao.getMyStockFlow().distinctUntilChanged()
