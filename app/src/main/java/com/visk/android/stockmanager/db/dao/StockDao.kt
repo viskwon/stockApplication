@@ -40,8 +40,8 @@ interface StockDao {
     @Query("SELECT stockId FROM StockInfo Where name= :name ")
     suspend fun getStockId(name: String): String
 
-    @Query("SELECT name FROM StockInfo Where name= :id ")
-    suspend fun getStockName(id: String): String
+    @Query("SELECT name FROM StockInfo Where stockId= :id ")
+    suspend fun getStockName(id: String): String?
 
 
     @Query("SELECT stockId FROM StockMine  ")

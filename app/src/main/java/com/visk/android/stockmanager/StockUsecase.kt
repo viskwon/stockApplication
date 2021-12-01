@@ -47,7 +47,7 @@ class StockUsecase @Inject constructor(
 Log.d("hjskwon","list ${list.size}")
             list.forEach {
                 if(it.name.isBlank()){
-                    it.name = stockRepository.getStockName(it.id)
+                    stockRepository.getStockName(it.id)?.run { it.name = this }
                 }
             }
             list.toList()

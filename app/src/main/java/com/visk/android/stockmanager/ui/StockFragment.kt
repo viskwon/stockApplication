@@ -61,6 +61,7 @@ class StockFragment : Fragment() {
             }
         })
         recyclerView.adapter = adapter
+        recyclerView.recycledViewPool.setMaxRecycledViews(0,0)
 
         viewModel.stockLiveData.observe(viewLifecycleOwner, {
             adapter.setData(it)
