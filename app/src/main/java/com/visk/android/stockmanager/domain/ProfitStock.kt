@@ -1,6 +1,6 @@
 package com.visk.android.stockmanager.domain
 
-class CombineStock (
+class ProfitStock (
     var id: String ="",
     var name: String ="",
     var currentPrice: Int =0,

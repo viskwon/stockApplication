@@ -25,10 +25,14 @@ interface StockDao {
     @Query("SELECT * FROM StockTrade ORDER BY stockId ")
     fun getTradeFlow(): Flow<List<StockTrade>>
 
+    @Query("SELECT * FROM StockTrade ORDER BY stockId ")
+    suspend fun getTradeList(): List<StockTrade>
+
+
     @Query("SELECT * FROM StockInfo Where stockId In(:ids) ")
     fun getStockInfoFlow(ids: List<String>): Flow<List<StockInfo>>
     @Query("SELECT stockId FROM StockMine  ")
-     fun getMyStockIdFlow() : Flow<List<String>>
+    fun getMyStockIdFlow() : Flow<List<String>>
 
     @Query("SELECT * FROM StockMine Where stockId= :stockId ")
     suspend fun getStockMine(stockId : String): StockMine?

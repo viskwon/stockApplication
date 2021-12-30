@@ -29,6 +29,8 @@ class StockRepository  @Inject constructor(private val remoteDataSource : StockR
 
     fun tradeListFlow() = stockDao.getTradeFlow()
 
+    suspend fun getTradeList() = stockDao.getTradeList()
+
     suspend fun getStockName(id : String) = stockDao.getStockName(id)
 
 

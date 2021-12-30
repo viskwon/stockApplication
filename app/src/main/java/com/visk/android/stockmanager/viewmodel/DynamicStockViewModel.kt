@@ -14,7 +14,7 @@ class DynamicStockViewModel @Inject constructor(
     application: Application
 ) : AndroidViewModel(application) {
 
-    val combineStock = stockUsecase.getCombineStock().asLiveData()
+    val stockProfitList = stockUsecase.stockHistoryProfit().asLiveData()
 
 
 }

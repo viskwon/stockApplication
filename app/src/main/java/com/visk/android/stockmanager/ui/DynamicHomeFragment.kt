@@ -28,9 +28,8 @@ import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import com.visk.android.stockmanager.domain.CombineStock
+import com.visk.android.stockmanager.domain.ProfitStock
 import com.visk.android.stockmanager.viewmodel.DynamicStockViewModel
-import com.visk.android.stockmanager.viewmodel.StockViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlin.math.roundToInt
 @AndroidEntryPoint
@@ -135,7 +134,7 @@ class DynamicHomeFragment : Fragment() {
     fun dynamicStockList() {
         // We save the scrolling position with this state
         val scrollState = rememberLazyListState()
-        val items: List<CombineStock> by viewModel.combineStock.observeAsState(listOf())
+        val items: List<ProfitStock> by viewModel.stockProfitList.observeAsState(listOf())
         Log.d("hjskwon","${items.size}")
         LazyColumn(contentPadding = PaddingValues(top = 150.dp)) {
             items(items.size) {
@@ -144,7 +143,7 @@ class DynamicHomeFragment : Fragment() {
         }
     }
     @Composable
-    fun item(stock : CombineStock) {
+    fun item(stock : ProfitStock) {
         Column(
             Modifier
                 .fillMaxWidth()) {
